@@ -1,3 +1,4 @@
+require 'pry'
 class Aic::CLI
 
   def call
@@ -10,6 +11,8 @@ class Aic::CLI
       events
     when "info"
       info
+    else
+      call
     end #case statement end
   end #call end
 
@@ -32,6 +35,7 @@ class Aic::CLI
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
+      #binding.pry
     when "future"
       puts "1. Color Studies"
       puts "2. Making Memories: Quilts as Souvenirs"
@@ -55,12 +59,11 @@ class Aic::CLI
     (note that this does not include Fast Passes, Memberships, or combination tickets"
   end #info end
 
-  def selection(selection)
-    #"Enter the name of the exhibit or its number for dates, times, and description"
-    case selection
-    when selection.is_a?(Integer)
+  def selection(choice)
+
+  if choice.to_i.is_a?(Integer)
       puts "First selection"
-    when selection.is_a?(String)
+    else
       puts "Second selection"
     end #case end
   end#selection end
