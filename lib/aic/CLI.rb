@@ -56,6 +56,7 @@ class Aic::CLI
       puts "2. Gallery Talk: Gauguin's Circle (Talk)"
     when Chronic.parse(input).is_a?(Time) && !input.include?("-")#returns events on a single date
       puts "First Selection"
+      event_date_comparison
     when "range"
       puts "Please enter a start date (MM/DD/YYYY)"
       start_date = gets.strip
@@ -83,9 +84,11 @@ class Aic::CLI
       end #if end
     end#selection end
 
-    def date_conversion(start_date, end_date) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
+    def event_date_comparison(start_date, end_date = 0) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
       start = Chronic.parse(start_date)
-      over = Chronic.parse(end_date)
-      end#ends if statement
-    end #date_conversion end
+      if end_date != 0
+        over = Chronic.parse(end_date)
+      end #if statement end
+    end #event_date_comparison end
+
 end#CLI object end
