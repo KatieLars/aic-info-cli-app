@@ -1,3 +1,5 @@
 #!/usr/bin/env ruby
 
 require './lib/aic'
+
+Aic::CLI.new.call
