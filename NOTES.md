@@ -84,7 +84,7 @@ Type "all" to see a list of all the events
            Wednesday, August 9, 2017
               10:30 am - 5 pm
            etc.
-
+_______________________________________________________________________________
     For events at a certain time, please choose from the following:
       -morning (10 am-12 pm)
       -afternoon (12 pm-5 pm)
@@ -97,7 +97,7 @@ Type "all" to see a list of all the events
              Live Arts:
              Friday, August 25 2017
              8 pm - 10pm
-
+___________________________________________________________________________________
       For general information about the AIC (hours, location), type "general"
         =>Hours: 10:30am-5pm
         Address: 111 South Michigan Avenue

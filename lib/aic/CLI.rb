@@ -22,8 +22,11 @@ class Aic::CLI
     when "events"
       puts "To see a list of all events in the next year, type 'all'"
       puts "Enter a start and end date (MM/DD/YYYY) to see events during that time"
-      puts "To see certain types of events, enter one of the following"
-      puts "<list of types scraped from event page>"
-      puts
+      puts "To see certain types of events, enter 'type'"
+    when "info"
+      puts "Hours: 10:30am - 5pm"
+      puts "Location: 111 South Michigan Avenue"
+      puts "Admission fees are based in part on state and city residency. Please select one of the following to see full admission costs (note that this does not include Fast Passes, Memberships, or combination tickets"
+    end
   end
 end
