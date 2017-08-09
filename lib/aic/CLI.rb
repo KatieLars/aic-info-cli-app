@@ -1,5 +1,5 @@
 require 'pry'
-require 'date'
+require 'chronic'
 class Aic::CLI
 
   def call
@@ -75,7 +75,10 @@ class Aic::CLI
       end #if end
     end#selection end
 
-    def date_conversion(date_start, date_end = 0) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
-
+    def date_conversion(start, over = 0) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
+      start_date = Chronic.parse(start)
+      if over != 0
+      end_date = Chronic.parse(over)
+      end#ends if statement
     end #date_conversion end
 end#CLI object end
