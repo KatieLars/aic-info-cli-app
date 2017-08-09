@@ -1,4 +1,5 @@
 require 'pry'
+require 'date'
 class Aic::CLI
 
   def call
@@ -35,7 +36,6 @@ class Aic::CLI
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
-      #binding.pry
     when "future"
       puts "1. Color Studies"
       puts "2. Making Memories: Quilts as Souvenirs"
@@ -47,8 +47,14 @@ class Aic::CLI
 
   def events
     puts "To see a list of all events in the next year, type 'all'"
-    puts "Enter a start and end date (MM/DD/YYYY) to see events during that time"
+    puts "Enter a date or date range (MM/DD/YYYY) to see select events"
     puts "To see certain types of events, enter 'type'"
+    input = gets.strip
+    case input
+    when "all"
+      puts "1. The Artist's Studio (Family Program)"
+      puts "2. Gallery Talk: Gauguin's Circle (Talk)"
+    when ""
   end #events end
 
   def info
@@ -59,12 +65,17 @@ class Aic::CLI
     (note that this does not include Fast Passes, Memberships, or combination tickets"
   end #info end
 
-  def selection(choice)
+    def selection(choice)
+      if choice.to_i.is_a?(Integer)
+        puts "First selection"
+      #elsif choice matches any of the names of exhibits/events,
+        #return all the info (title, dates, location, url, description, type, etc.)
+      else
+        puts "Second selection"
+      end #if end
+    end#selection end
 
-  if choice.to_i.is_a?(Integer)
-      puts "First selection"
-    else
-      puts "Second selection"
-    end #case end
-  end#selection end
+    def date_conversion(date_start, date_end = 0) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
+
+    end #date_conversion end
 end#CLI object end
