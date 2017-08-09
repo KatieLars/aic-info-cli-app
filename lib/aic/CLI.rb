@@ -47,14 +47,22 @@ class Aic::CLI
 
   def events
     puts "To see a list of all events in the next year, type 'all'"
-    puts "Enter a date or date range (MM/DD/YYYY) to see select events"
+    puts "Enter a date or type 'range' to enter a date range and see select events"
     puts "To see certain types of events, enter 'type'"
     input = gets.strip
     case input
-    when "all"
+    when "all" #returns list of scraped events
       puts "1. The Artist's Studio (Family Program)"
       puts "2. Gallery Talk: Gauguin's Circle (Talk)"
-    when ""
+    when Chronic.parse(input).is_a?(Time) && !input.include?("-")#returns events on a single date
+      puts "First Selection"
+    when "range"
+      puts "Please enter a start date (MM/DD/YYYY)"
+      start_date = gets.strip
+      puts "Please enter an end date (MM/DD/YYYY)"
+      end_date = gets.strip
+      date_conversion(start_date, end_date)
+    when
   end #events end
 
   def info
@@ -75,10 +83,9 @@ class Aic::CLI
       end #if end
     end#selection end
 
-    def date_conversion(start, over = 0) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
-      start_date = Chronic.parse(start)
-      if over != 0
-      end_date = Chronic.parse(over)
+    def date_conversion(start_date, end_date) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
+      start = Chronic.parse(start_date)
+      over = Chronic.parse(end_date)
       end#ends if statement
     end #date_conversion end
 end#CLI object end
