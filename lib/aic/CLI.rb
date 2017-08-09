@@ -30,11 +30,14 @@ class Aic::CLI
       puts "1. Gauguin: Artist as Alchemist"
       puts "2. Saints and Heroes"
       puts "Enter the name of the exhibit or its number for dates, times, and description"
-
+      new_input = gets.strip
+      selection(new_input)
     when "future"
       puts "1. Color Studies"
       puts "2. Making Memories: Quilts as Souvenirs"
       puts "Enter the name of the exhibit or its number for dates, times, and description"
+      new_input = gets.strip
+      selection(new_input)
     end #case statements end
   end #exhibits end
 
@@ -52,7 +55,13 @@ class Aic::CLI
     (note that this does not include Fast Passes, Memberships, or combination tickets"
   end #info end
 
-  def selection
-
-  end
+  def selection(selection)
+    #"Enter the name of the exhibit or its number for dates, times, and description"
+    case selection
+    when selection.is_a?(Integer)
+      puts "First selection"
+    when selection.is_a?(String)
+      puts "Second selection"
+    end #case end
+  end#selection end
 end#CLI object end
