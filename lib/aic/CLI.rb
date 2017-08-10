@@ -110,15 +110,20 @@ class Aic::CLI
     def type
       puts "Please choose from one of the following categories, entering either the name or number:"
       #counter = 1
+      #type_menu = []
       #Event.all.each do |k,v|
+        #type_menu << "#{counter +1}. #{k}"
         #puts "#{counter +1}. #{k}\n"
         #counter += 1
       #end
         #@@all is a hash with types being the keys, and number of events of each type, the values. Sorted with high values first.
         #This will return a list with each type of event on a new line
       input = gets.strip
-      case input
+      case input #comparing user input to list
       when input.to_i.is_a?(Integer)
+        #type_menu.each do |type_string|
+          #type_string.include?(input)
+
         #matches user input to the correct string
         #pulls revelent events from Event class
       when input
