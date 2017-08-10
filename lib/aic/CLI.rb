@@ -73,7 +73,10 @@ class Aic::CLI
       new_input = gets.strip
       selection(new_input)
     when "type"
-      type
+      #type
+      puts "Enter the name of the event or its number for dates, times, and description"
+      new_input = gets.strip
+      selection(new_input
     end #case statement end
   end #events end
 
@@ -106,7 +109,8 @@ class Aic::CLI
 
     def type
       #shows menu for type
-      #matches user input for t
+      #matches user input to Event.type
+      #returns a list of all events names of that type
     end #type end
 
 end#CLI object end
