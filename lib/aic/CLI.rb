@@ -108,6 +108,17 @@ class Aic::CLI
     end #event_date_comparison end
 
     def type
+      puts "Please choose from one of the following categories, entering either the name or number:"
+      puts   << EVENT_TYPES
+      1. Talks
+      2.Member Exclusive
+      3. Family Program
+      4. Special Events
+      5. Live Arts
+      6. Classes and Workshops
+      7. Screenings
+      8. Misc (event doesnt fit into above categories)
+      EVENT_TYPES
       #shows menu for type
       #matches user input to Event.type
       #returns a list of all events names of that type
