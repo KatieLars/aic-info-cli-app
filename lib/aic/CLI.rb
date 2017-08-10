@@ -51,19 +51,30 @@ class Aic::CLI
     puts "To see certain types of events, enter 'type'"
     input = gets.strip
     case input
-    when "all" #returns list of scraped events
+    when "all" #returns list of scraped events. Create an #all method?
       puts "1. The Artist's Studio (Family Program)"
       puts "2. Gallery Talk: Gauguin's Circle (Talk)"
-    when Chronic.parse(input).is_a?(Time) && !input.include?("-")#returns events on a single date
+      puts "Enter the name of the event or its number for dates, times, and description"
+      new_input = gets.strip
+      selection(new_input)
+    when Chronic.parse(input).is_a?(Time) #create a date method?
       puts "First Selection"
-      event_date_comparison
-    when "range"
+      #eventually will run event_date_comparison(input)
+      puts "Enter the name of the event or its number for dates, times, and description"
+      new_input = gets.strip
+      selection(new_input)
+    when "range" #create a range method?
       puts "Please enter a start date (MM/DD/YYYY)"
       start_date = gets.strip
       puts "Please enter an end date (MM/DD/YYYY)"
       end_date = gets.strip
-      date_conversion(start_date, end_date)
-    when
+      #eventullly will run event_date_comparison(start_date, end_date)
+      puts "Enter the name of the event or its number for dates, times, and description"
+      new_input = gets.strip
+      selection(new_input)
+    when "type"
+      type
+    end #case statement end
   end #events end
 
   def info
@@ -89,6 +100,13 @@ class Aic::CLI
       if end_date != 0
         over = Chronic.parse(end_date)
       end #if statement end
+      #lists Event.title where all Event.date == start
+      #lists Event.title where all Event.date.between?(start, over)
     end #event_date_comparison end
+
+    def type
+      #shows menu for type
+      #matches user input for t
+    end #type end
 
 end#CLI object end
