@@ -111,15 +111,18 @@ class Aic::CLI
       puts "Please choose from one of the following categories, entering either the name or number:"
       puts   << EVENT_TYPES
       1. Talks
-      2.Member Exclusive
+      2. Member Exclusive
       3. Family Program
       4. Special Events
       5. Live Arts
       6. Classes and Workshops
       7. Screenings
-      8. Misc (event doesnt fit into above categories)
+      8. Misc (event does not fit into above categories)
       EVENT_TYPES
-      #shows menu for type
+      input = gets.strip
+      case input
+      when input.to_i.is_a?(Integer)
+        input
       #matches user input to Event.type
       #returns a list of all events names of that type
     end #type end
