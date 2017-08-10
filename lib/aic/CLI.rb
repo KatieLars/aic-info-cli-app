@@ -18,7 +18,7 @@ class Aic::CLI
   end #call end
 
 
-  def menu
+  def menu #COMPLETE
     puts "Come see what's at the Art Institute!"
     puts "For current and upcoming exhibits, type 'exhibits'"
     puts "For upcoming events, type 'events'"
@@ -30,13 +30,13 @@ class Aic::CLI
     puts "For future exhibits, enter 'future'"
     input = gets.strip
     case input
-    when "current"
+    when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
       puts "1. Gauguin: Artist as Alchemist"
       puts "2. Saints and Heroes"
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
-    when "future"
+    when "future" #This should access Exhibit.future--same functionaity as other case value)
       puts "1. Color Studies"
       puts "2. Making Memories: Quilts as Souvenirs"
       puts "Enter the name of the exhibit or its number for dates, times, and description"
