@@ -1,4 +1,5 @@
-class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape
+class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all other objects
+
   def self.scrape_admission(residency)
     case residency
     when "General"
@@ -11,4 +12,6 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape
       #scrapes code for free admission opportunities and re-organizes it
     end #case end
   end #general admission end
+
+  
 end

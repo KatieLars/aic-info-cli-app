@@ -68,12 +68,12 @@ class Aic::CLI
       start_date = gets.strip
       puts "Please enter an end date (MM/DD/YYYY)"
       end_date = gets.strip
-      #eventullly will run event_date_comparison(start_date, end_date)
+      #eventually will run event_date_comparison(start_date, end_date)
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
     when "type"
-      #type
+      type
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
@@ -89,7 +89,7 @@ class Aic::CLI
     admission
   end #info end
 
-    def selection(choice)
+    def selection(choice) #selects the name of an Event or the integer indicating its title, and returns Event info
       if choice.to_i.is_a?(Integer)
         puts "First selection"
       #elsif choice matches any of the names of exhibits/events,
