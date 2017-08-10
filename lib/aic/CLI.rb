@@ -111,26 +111,24 @@ class Aic::CLI
       puts "Please choose from one of the following categories, entering either the name or number:"
       #counter = 1
       #type_menu = []
-      #Event.all.each do |k,v|
+      #Event.all.each do |k,v| #creates type_menu array and puts list of options
         #type_menu << "#{counter +1}. #{k}"
         #puts "#{counter +1}. #{k}\n"
         #counter += 1
-      #end
-
+      #end #each end
         #@@all is a hash with types being the keys, and number of events of each type, the values. Sorted with high values first.
-        #This will return a list with each type of event on a new line
       input = gets.strip #input must match menu option (number or words) and then puts a list of all the events in that type
-        #need to access Type class to get a list of all the events in the types
-        #EventType.all.each do |k,v|
-        # if input == k.name
-           #puts "#{k.events}"
-          #end
+        #EventType.all.each do |k,v| #iterates over a hash and returns Type.events for correct type
+        # if input == k.name #if input matches name of EventType
+           #events_array = k.events.title #not sure if this will actually create an array of event titles
+           #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
+          #end #if statement end
           #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
             #y = type_menu.each {|string| string.include?(input)} checking array for numbers, returns string
-            #y
+            #x = y.split
             #EventType.each do |type_instance|
-              #puts "#{type_instance.name.include?(y).events}" #returns the events list from the type instance that includes
-
+              #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
+            #end
         #matches user input to the correct string
         #pulls revelent events from Event class
       #matches user input to Event.type
