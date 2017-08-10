@@ -109,20 +109,13 @@ class Aic::CLI
 
     def type
       puts "Please choose from one of the following categories, entering either the name or number:"
-      #Event.all.each.with_index(1) {|e, i| puts "#{i}. #{e}"} consider using a has for @@all to indicate the number of each
-      #type and have @@all organized from the largest number to the smallest number
-        #This will return a string
-
-      #<< EVENT_TYPES
-      #1. Talks
-      #2. Member Exclusive
-      #3. Family Program
-      #4. Special Events
-      #5. Live Arts
-      #6. Classes and Workshops
-      #7. Screenings
-      #8. Misc (event does not fit into above categories)
-      #EVENT_TYPES
+      #counter = 1
+      #Event.all.each do |k,v|
+        #puts "#{counter +1}. #{k}\n"
+        #counter += 1
+      #end
+        #@@all is a hash with types being the keys, and number of events of each type, the values. Sorted with high values first.
+        #This will return a list with each type of event on a new line
       input = gets.strip
       case input
       when input.to_i.is_a?(Integer)
