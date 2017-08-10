@@ -116,9 +116,10 @@ class Aic::CLI
         #puts "#{counter +1}. #{k}\n"
         #counter += 1
       #end #each end
+      #type_menu
         #@@all is a hash with types being the keys, and number of events of each type, the values. Sorted with high values first.
       input = gets.strip #input must match menu option (number or words) and then puts a list of all the events in that type
-        #EventType.all.each do |k,v| #iterates over a hash and returns Type.events for correct type
+        #EventType.all.each do |k,v| #iterates over a hash and returns Type.events.title for correct type
         # if input == k.name #if input matches name of EventType
            #events_array = k.events.title #not sure if this will actually create an array of event titles
            #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
@@ -128,10 +129,9 @@ class Aic::CLI
             #x = y.split
             #EventType.each do |type_instance|
               #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
-            #end
-        #matches user input to the correct string
-        #pulls revelent events from Event class
-      #matches user input to Event.type
+            #end #each statement end
+          #end #if statement end
+        #end #all.each end
       #returns a list of all events names of that type
     end #type end
 
