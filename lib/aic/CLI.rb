@@ -137,8 +137,15 @@ class Aic::CLI
     end #type end
 
     def admission
-      admission_list = ["General Admission", "Illinois Residents", "Chicago Residents", "Free"]
-      admission_list.each {|e| puts
-
+      admission_list = ["1. General", "2. Illinois", "3. Chicago", "4. Free"]
+      admission_list.each {|e| puts "#{e}\n"}
+      input = gets.strip
+      if admission_list.each {|e| e.include?(input)} #if input maches one of the admission_list options
+        z = admission_list.select {|e| e.include?(input)}.join.split[1] #returns string without integer ("Illinois")
+        #Scraper.send("scrape_admission", "#{z}")
+        #takes the string result of z, and #sends it to the Scraper method #scrape_admission with an argument of z
+      else
+        admission
+      end #if statment end
     end #admission end
 end#CLI object end
