@@ -76,7 +76,7 @@ class Aic::CLI
       #type
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
-      selection(new_input
+      selection(new_input)
     end #case statement end
   end #events end
 
@@ -84,8 +84,9 @@ class Aic::CLI
     puts "Hours: 10:30am - 5pm"
     puts "Location: 111 South Michigan Avenue"
     puts "Admission fees are based in part on state and city residency.
-    Please select one of the following to see full admission costs
-    (note that this does not include Fast Passes, Memberships, or combination tickets"
+    Please select one of the following to see full admission costs:
+    (note that this does not include Fast Passes, Memberships, or combination tickets)" #consider using a here doc
+    admission
   end #info end
 
     def selection(choice)
@@ -121,7 +122,7 @@ class Aic::CLI
       input = gets.strip #input must match menu option (number or words) and then puts a list of all the events in that type
         #EventType.all.each do |k,v| #iterates over a hash and returns Type.events.title for correct type
         # if input == k.name #if input matches name of EventType
-           #events_array = k.events.title #not sure if this will actually create an array of event titles
+           #events_array = k.events.collect {|e| e.title} #returns array of event titles
            #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
           #end #if statement end
           #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
@@ -135,4 +136,9 @@ class Aic::CLI
       #returns a list of all events names of that type
     end #type end
 
+    def admission
+      admission_list = ["General Admission", "Illinois Residents", "Chicago Residents", "Free"]
+      admission_list.each {|e| puts
+
+    end #admission end
 end#CLI object end
