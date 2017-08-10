@@ -13,5 +13,9 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
     end #case end
   end #general admission end
 
-  
+  #scraper should also scrape for EventTypes and they should be added to EventType.all if they are new and
+  #scraper should scrape code from Exhibit page, Calendar page, Admission page, Description pages for individual Events and exhibits
+  #should generate: Exhibit object and Event object
+  #puts admissions information
+  #needs to interact with all objects
 end
