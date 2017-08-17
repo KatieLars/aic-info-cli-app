@@ -31,14 +31,12 @@ class Aic::CLI
     input = gets.strip
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      puts "1. Gauguin: Artist as Alchemist"
-      puts "2. Saints and Heroes"
+      Exhibits.self.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
     when "future" #This should access Exhibit.future--same functionaity as other case value)
-      puts "1. Color Studies"
-      puts "2. Making Memories: Quilts as Souvenirs"
+      Exhibits.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
