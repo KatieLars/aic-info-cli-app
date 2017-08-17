@@ -36,4 +36,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "Nokogiri"
   spec.add_dependency "Chronic"
+  spec.add_dependency "open_uri_redirections", "~> 0.2.1"
 end
