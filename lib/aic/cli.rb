@@ -34,7 +34,20 @@ class Aic::CLI
       Exhibits.self.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
-      selection(new_input)
+      #Exhibits.self.current.each do |exhibit| #iterates over an array and returns info for that event
+      # if input == exhibit.title
+         #puts "#{exhibit.title}\n"
+         #puts 
+         #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
+        #end #if statement end
+        #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
+          #y = type_menu.each {|string| string.include?(input)} checking array for numbers, returns string
+          #x = y.split
+          #EventType.each do |type_instance|
+            #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
+          #end #each statement end
+        #end #if statement end
+      #end #all.each end
     when "future" #This should access Exhibit.future--same functionaity as other case value)
       Exhibits.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
@@ -88,6 +101,19 @@ class Aic::CLI
   end #info end
 
     def selection(choice) #selects the name of an Event or the integer indicating its title, and returns Event info
+      #EventType.all.each do |k,v| #iterates over a hash and returns Type.events.title for correct type
+      # if input == k.name #if input matches name of EventType
+         #events_array = k.events.collect {|e| e.title} #returns array of event titles
+         #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
+        #end #if statement end
+        #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
+          #y = type_menu.each {|string| string.include?(input)} checking array for numbers, returns string
+          #x = y.split
+          #EventType.each do |type_instance|
+            #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
+          #end #each statement end
+        #end #if statement end
+      #end #all.each end
       if choice.to_i.is_a?(Integer)
         puts "First selection"
       #elsif choice matches any of the names of exhibits/events,

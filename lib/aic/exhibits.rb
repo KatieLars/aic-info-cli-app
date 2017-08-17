@@ -1,9 +1,17 @@
 class Aic::Exhibits
-  attr_accessor :title, :date_range, :now_or_future, :url, :description, :location
+  attr_accessor :title, :date_range, :url, :description, :location
   @@current = []
   @@future = []
 
-  #@@current & @@future is an array that stores all Exhibit objects that have an @now_or_future of "current" or "upcoming" (aka future)
+  def self.current
+    @@current
+  end #self.current end
+
+  def self.future
+    @@future
+  end #self.future end
+
+  
   #type lock @@current and @@future as Exhibit objects
   #Each Exhibit has: a title, a date, now or future category, a url, description, and location
     #this is a place to store data
