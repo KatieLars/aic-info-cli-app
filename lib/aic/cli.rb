@@ -31,16 +31,17 @@ class Aic::CLI
     input = gets.strip
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      Exhibits.self.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
+      Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
-      #Exhibits.self.current.each do |exhibit| #iterates over an array and returns info for that event
+      #Exhibit.self.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
       # if input == exhibit.title
-         #puts "#{exhibit.title}\n"
-         #puts 
-         #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
-        #end #if statement end
-        #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
+         #puts "#{exhibit.title}"
+         #puts "#{exhibit.date_range}"
+         #puts "#{exhibit.location}"
+         #puts "#{exhibit.description}"
+         #puts "#{exhibit.url}"
+        #elsif input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
           #y = type_menu.each {|string| string.include?(input)} checking array for numbers, returns string
           #x = y.split
           #EventType.each do |type_instance|
@@ -49,7 +50,7 @@ class Aic::CLI
         #end #if statement end
       #end #all.each end
     when "future" #This should access Exhibit.future--same functionaity as other case value)
-      Exhibits.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
+      Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)

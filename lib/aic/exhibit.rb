@@ -1,4 +1,4 @@
-class Aic::Exhibits
+class Aic::Exhibit
   attr_accessor :title, :date_range, :url, :description, :location
   @@current = []
   @@future = []
@@ -11,7 +11,7 @@ class Aic::Exhibits
     @@future
   end #self.future end
 
-  
+
   #type lock @@current and @@future as Exhibit objects
   #Each Exhibit has: a title, a date, now or future category, a url, description, and location
     #this is a place to store data
