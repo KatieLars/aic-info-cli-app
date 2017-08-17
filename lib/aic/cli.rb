@@ -31,7 +31,7 @@ class Aic::CLI
     input = gets.strip
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      current_exhibits = []
+      current_exhibits = [] #array of strings
       Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       current_exhibits = Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
@@ -43,20 +43,39 @@ class Aic::CLI
          #puts "#{exhibit.location}"
          #puts "#{exhibit.description}"
          #puts "#{exhibit.url}"
-        #elsif input.to_i.is_a?(Integer) #matches number to correct type and produces list of events for that type
-          #current_exhibits.each do |string|
-            #if string.include?(input) #checking array for numbers, returns string
-          #x = y.split
-          #EventType.each do |type_instance|
-            #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
-          #end #each statement end
-        #end #if statement end
-      #end #all.each end
+        #elsif input.to_i.is_a?(Integer) #matches number to correct type and lists relevant event info
+          #y = current_exhibits.detect {|string| string.include?(input)} #checking array for numbers, returns string
+          #select_exhibit = Exhibit.self.current.detect {|exhibit_instance| exhibit_instance.title == y.split[1]} #matches title of Exhibit object to title that appears in string
+            #puts "#{select_exhibit.title}"
+            #puts "#{select_exhibit.date_range}"
+            #puts "#{select_exhibit.location}"
+            #puts "#{select_exhibit.description}"
+            #puts "#{select_exhibit.url}"
+          #end #if statement end
+        #end #each statement end
     when "future" #This should access Exhibit.future--same functionaity as other case value)
+      future_exhibits = [] #array of strings
       Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
+      future_exhibits = Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.name}"} 
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
-      selection(new_input)
+      #Exhibit.self.future.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
+      # if input == exhibit.title
+         #puts "#{exhibit.title}"
+         #puts "#{exhibit.date_range}"
+         #puts "#{exhibit.location}"
+         #puts "#{exhibit.description}"
+         #puts "#{exhibit.url}"
+        #elsif input.to_i.is_a?(Integer) #matches number to correct type and lists relevant event info
+          #y = current_exhibits.detect {|string| string.include?(input)} #checking array for numbers, returns string
+          #select_exhibit = Exhibit.self.future.detect {|exhibit_instance| exhibit_instance.title == y.split[1]} #matches title of Exhibit object to title that appears in string
+            #puts "#{select_exhibit.title}"
+            #puts "#{select_exhibit.date_range}"
+            #puts "#{select_exhibit.location}"
+            #puts "#{select_exhibit.description}"
+            #puts "#{select_exhibit.url}"
+        #end #if statement end
+      #end #each statement end
     end #case statements end
   end #exhibits end
 
