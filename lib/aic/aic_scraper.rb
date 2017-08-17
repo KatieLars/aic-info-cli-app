@@ -1,4 +1,4 @@
-require 'Nokogiri'
+require 'nokogiri'
 class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all other objects
 
   def self.scrape_admission(residency)
@@ -16,13 +16,13 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
 
   def self.scrape_current_exhibits #creates Exhibit objects from a website
     doc = Nokogiri::HTML(open("http://www.artic.edu/exhibitions/current"))
+    Exhibit.new
     counter = 1
     title_array = doc.css("div.views-field.views-field-title span.field-content").text.split(/\n/)
-    title_array.each do |title|
-      Exhibit.new
-      Exhibit.title = title
+    #pass over array and create Exhibit objects with title
+      Exhibit.title = title_array[counter]
       counter += 1
-    end
+
     #scrapes a list of current exhibits from pages and creates Exhibit objects with the following properties:
       #title, url, date_range, description, location, and adds it to @@current
   end #scrape_current end
