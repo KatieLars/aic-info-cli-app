@@ -1,5 +1,7 @@
 require 'pry'
 require 'chronic'
+require 'nokogiri'
+
 class Aic::CLI
 
   def call
@@ -37,7 +39,7 @@ class Aic::CLI
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       #Exhibit.self.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
-      # if input == exhibit.title
+       #if input == exhibit.title
          #puts "#{exhibit.title}"
          #puts "#{exhibit.date_range}"
          #puts "#{exhibit.location}"
@@ -56,7 +58,7 @@ class Aic::CLI
     when "future" #This should access Exhibit.future--same functionaity as other case value)
       future_exhibits = [] #array of strings
       Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
-      future_exhibits = Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.name}"} 
+      future_exhibits = Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.name}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       #Exhibit.self.future.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
@@ -74,8 +76,9 @@ class Aic::CLI
             #puts "#{select_exhibit.location}"
             #puts "#{select_exhibit.description}"
             #puts "#{select_exhibit.url}"
-        #end #if statement end
-      #end #each statement end
+          #end #if statement end
+        #end #each statement end
+      #end
     end #case statements end
   end #exhibits end
 

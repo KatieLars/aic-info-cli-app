@@ -1,3 +1,4 @@
+require 'Nokogiri'
 class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all other objects
 
   def self.scrape_admission(residency)
@@ -14,7 +15,7 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
   end #general admission end
 
   def self.scrape_current_exhibits
-    #doc = Nokogiri :: HTML (HARD CODE CURRENT URL HERE)
+    doc = Nokogiri::HTML('http://www.artic.edu/exhibitions/current')
     #scrapes a list of current exhibits from pages and creates Exhibit objects with the following properties:
       #title, url, date_range, description, location, and adds it to @@current
   end #scrape_current end
@@ -24,7 +25,7 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
     #scrapes a list of current exhibits from pages and creates Exhibit objects with the following properties:
       #title, url, date_range, description, location, and adds it to @@future
   end #scrape_future end
-  
+
   #scraper should also scrape for EventTypes and they should be added to EventType.all if they are new and
   #scraper should scrape code from Exhibit page, Calendar page, Admission page, Description pages for individual Events and exhibits
   #should generate: Exhibit object and Event object
