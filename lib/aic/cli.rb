@@ -32,13 +32,8 @@ class Aic::CLI
     puts "For current exhibits, enter 'current'"
     puts "For future exhibits, enter 'future'"
     input = gets.strip
-    doc = Nokogiri::HTML(open("http://www.artic.edu/exhibitions/current"))
-    binding.pry
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-#doc = Nokogiri::HTML(open("https://www.washingtonpost.com/"))
-#binding.pry
-#m=doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
       current_exhibits = [] #array of strings
       Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
       current_exhibits = Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.name}"}

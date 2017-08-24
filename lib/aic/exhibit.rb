@@ -3,12 +3,21 @@ class Aic::Exhibit
   @@current = []
   @@future = []
 
-  def self.current
-    @@current
+  def self.new_from_site(url)
+    exhibit = Exhibit.new
+    ex_properties = Scraper.scrape_exhibits(url)
+    if url.include?("current")
+      exhibit << @@current
+    elsif url.include?("upcoming")
+      exhibit << @@future
+    end
+
   end #self.current end
 
   def self.future
-    @@future
+    future_ex = Exhibit.new
+    ex_properties = Scraper. scrape_exhibits("http://www.artic.edu/exhibitions/upcoming")
+    future_ex << @@future
   end #self.future end
 
 
