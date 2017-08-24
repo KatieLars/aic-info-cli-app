@@ -7,17 +7,19 @@ class Aic::Exhibit
     doc = Nokogiri::HTML(open("#{url}"))
     exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
     exhibit_array.each do |xml_element| #try to refactor with send
-      @title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
-      @date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
-      @location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
-      @description = xml_element.css("div.views-field.views-field-body span.field-content").text
-      @url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+      new_exhibit = Aic::Exhibit.new
+      new_exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
+      new_exhibit.date_range = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
+      new_exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
+      new_exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
+      new_exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+      if url.include?("current")
+        @@current << new_exhibit
+      elsif url.include?("upcoming")
+        @@future << new_exhibit
+      end #if/else
     end #do
-    if url.include?("current")
-      @@current << self
-    elsif url.include?("upcoming")
-      @@future << self
-    end #if/else
+
   end #initialize
 
   def self.current #creates & returns new Exhibit object based on current site

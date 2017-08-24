@@ -1,6 +1,6 @@
 require 'nokogiri'
 class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all other objects
-
+@@exhibits = []
   def self.scrape_admission(residency)
     case residency
     when "General"
@@ -15,15 +15,16 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
   end #general admission end
 
   def self.scrape_exhibits(url) #creates Exhibit objects from either upcoming or current website
+    new_exhibit = Aic::Exhibit.new
     doc = Nokogiri::HTML(open("#{url}"))
     exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
-    exhibit_array.each do |xml_element|
-
-      Aic::Exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
-      Aic::Exhibit.date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
-      Aic::Exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
-      Aic::Exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
-      Aic::Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+    y = exhibit_array.each do |xml_element|
+      new_exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
+      new_exhibit.date_range = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
+      new_exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
+      new_exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
+      new_exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+      @@exhibits << new_exhibit
     end
   end #scrape_exhibits end
 
