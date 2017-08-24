@@ -35,10 +35,11 @@ class Aic::CLI
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
       current_list = [] #array of strings
-      current_ex = Aic::Exhibit.new.scrape_from_web("http://www.artic.edu/exhibitions/current")
-      binding.pry
-      Aic::Exhibit.current.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.title}"}
-      current_list = Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.title}"}
+      current_scrape = Aic::Exhibit.scrape_from_web("http://www.artic.edu/exhibitions/current")
+    
+      #.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.title}"}
+binding.pry
+      current_list = Aic::Exhibit.self.current.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.title}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
       new_input = gets.strip
       #Exhibit.self.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event

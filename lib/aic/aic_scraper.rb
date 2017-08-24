@@ -19,11 +19,11 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
     exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
     exhibit_array.each do |xml_element|
 
-      Exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
-      Exhibit.date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
-      Exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
-      Exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
-      Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+      Aic::Exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
+      Aic::Exhibit.date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
+      Aic::Exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
+      Aic::Exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
+      Aic::Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
     end
   end #scrape_exhibits end
 
