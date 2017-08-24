@@ -3,7 +3,8 @@ class Aic::Exhibit
   @@current = []
   @@future = []
 
-  def initialize(url) #creates Exhibit objects from either upcoming or current website
+#HOOK IS SCRAPER
+  def initialize(url) #scrapes creates Exhibit objects from either upcoming or current website
     doc = Nokogiri::HTML(open("#{url}"))
     exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
     exhibit_array.each do |xml_element|
@@ -14,9 +15,9 @@ class Aic::Exhibit
       Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
     end #do
     if url.include?("current")
-      exhibit << @@current
+      self << @@current
     elsif url.include?("upcoming")
-      exhibit << @@future
+      self << @@future
     end #if/else
   end #initialize
 
