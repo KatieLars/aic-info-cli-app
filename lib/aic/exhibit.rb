@@ -3,24 +3,30 @@ class Aic::Exhibit
   @@current = []
   @@future = []
 
-  def self.new_from_site(url)
-    exhibit = Exhibit.new
-    ex_properties = Scraper.scrape_exhibits(url)
+  def initialize(url) #creates Exhibit objects from either upcoming or current website
+    doc = Nokogiri::HTML(open("#{url}"))
+    exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
+    exhibit_array.each do |xml_element|
+      Exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
+      Exhibit.date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
+      Exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
+      Exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
+      Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+    end #do
     if url.include?("current")
       exhibit << @@current
     elsif url.include?("upcoming")
       exhibit << @@future
-    end
+    end #if/else
+  end #initialize
 
-  end #self.current end
+  def self.current #creates & returns new Exhibit object based on current site
+    @@current
+  end
 
   def self.future
-    future_ex = Exhibit.new
-    ex_properties = Scraper. scrape_exhibits("http://www.artic.edu/exhibitions/upcoming")
-    future_ex << @@future
-  end #self.future end
-
-
+    @@future
+  end
   #type lock @@current and @@future as Exhibit objects
   #Each Exhibit has: a title, a date, now or future category, a url, description, and location
     #this is a place to store data

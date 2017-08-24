@@ -24,7 +24,7 @@ class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all oth
       Exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
       Exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
       Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
-    end]
+    end
   end #scrape_exhibits end
 
   #scraper should also scrape for EventTypes and they should be added to EventType.all if they are new and
