@@ -4,20 +4,21 @@ class Aic::Exhibit
   @@future = []
 
 #HOOK IS SCRAPER
-  def initialize(url) #scrapes creates Exhibit objects from either upcoming or current website
+  def self.scrape_from_web(url) #scrapes creates Exhibit objects from either upcoming or current website
     doc = Nokogiri::HTML(open("#{url}"))
     exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
-    exhibit_array.each do |xml_element|
-      Exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
-      Exhibit.date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
-      Exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
-      Exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
-      Exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
+    exhibit_array.each do |xml_element| #try to refactor with send
+      @title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
+      @date_rage = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
+      @location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
+      @description = xml_element.css("div.views-field.views-field-body span.field-content").text
+      @url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
     end #do
+    
     if url.include?("current")
-      self << @@current
+      @@current << self
     elsif url.include?("upcoming")
-      self << @@future
+      @@future << self
     end #if/else
   end #initialize
 
