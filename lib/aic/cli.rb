@@ -36,29 +36,29 @@ class Aic::CLI
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
       current_list = [] #array of strings
       Aic::Exhibit.scrape_from_web("http://www.artic.edu/exhibitions/current")
-    
-      y = Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
+      Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
+      current_list = Aic::Exhibit.current.collect.with_index(1) {|e, i| "#{i}. #{e.title}"}
 
-      current_list = Aic::Exhibit.current.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.title}"}
       puts "Enter the name of the exhibit or its number for dates, times, and description"
-      new_input = gets.strip
-      #Exhibit.self.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
-       #if input == exhibit.title
-         #puts "#{exhibit.title}"
-         #puts "#{exhibit.date_range}"
-         #puts "#{exhibit.location}"
-         #puts "#{exhibit.description}"
-         #puts "#{exhibit.url}"
-        #elsif input.to_i.is_a?(Integer) #matches number to correct type and lists relevant event info
-          #y = current_exhibits.detect {|string| string.include?(input)} #checking array for numbers, returns string
+      new_input = gets.strip #consider making the following a separate method for repeatability
+      Aic::Exhibit.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
+       if current_list.detect {|string| "#{new_input}"}
+         
+         puts "#{exhibit.title}"
+         puts "#{exhibit.date_range}"
+         puts "#{exhibit.location}"
+         puts "#{exhibit.description}"
+         puts "#{exhibit.url}"
+          #input.to_i.is_a?(Integer) #matches number to correct type and lists relevant event info
+          #y = current_list.detect {|string| string.include?(input)} #checking array for numbers, returns string
           #select_exhibit = Exhibit.self.current.detect {|exhibit_instance| exhibit_instance.title == y.split[1]} #matches title of Exhibit object to title that appears in string
-            #puts "#{select_exhibit.title}"
-            #puts "#{select_exhibit.date_range}"
-            #puts "#{select_exhibit.location}"
-            #puts "#{select_exhibit.description}"
-            #puts "#{select_exhibit.url}"
-          #end #if statement end
-        #end #each statement end
+          #  puts "#{select_exhibit.title}"
+          #  puts "#{select_exhibit.date_range}"
+          #  puts "#{select_exhibit.location}"
+          #  puts "#{select_exhibit.description}"
+          #  puts "#{select_exhibit.url}"
+          end #if statement end
+        end #each statement end
     when "future" #This should access Exhibit.future--same functionaity as other case value)
       future_exhibits = [] #array of strings
       Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}

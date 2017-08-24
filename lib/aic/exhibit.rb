@@ -11,7 +11,7 @@ class Aic::Exhibit
       new_exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
       new_exhibit.date_range = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
       new_exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
-      new_exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").text
+      new_exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").first.text
       new_exhibit.url = xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
       if url.include?("current")
         @@current << new_exhibit
@@ -20,7 +20,7 @@ class Aic::Exhibit
       end #if/else
     end #do
 
-  end #initialize
+  end #scrape_from_web
 
   def self.current #creates & returns new Exhibit object based on current site
     @@current
