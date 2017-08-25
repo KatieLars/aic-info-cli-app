@@ -34,32 +34,32 @@ class Aic::CLI
     input = gets.strip
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      current_hash = {} #has with index being key and exhibit tile as value
-      Aic::Exhibit.scrape_from_web("http://www.artic.edu/exhibitions/current")
-      Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
-      Aic::Exhibit.current.each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
-
-binding.pry
-      puts "Enter the name of the exhibit or its number for dates, times, and description"
-      new_input = gets.strip #consider making the following a separate method for repeatability
-      Aic::Exhibit.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
-        if exhibit.title.include? (current_hash.each {|k,v| v.include?("#{new_input}")})
-         #needs to detect if input matches word in title or number
-         puts "#{exhibit.title}"
-         puts "#{exhibit.date_range}"
-         puts "#{exhibit.location}"
-         puts "#{exhibit.description}"
-         puts "#{exhibit.url}"
-          #input.to_i.is_a?(Integer) #matches number to correct type and lists relevant event info
-          #y = current_list.detect {|string| string.include?(input)} #checking array for numbers, returns string
-          #select_exhibit = Exhibit.self.current.detect {|exhibit_instance| exhibit_instance.title == y.split[1]} #matches title of Exhibit object to title that appears in string
-          #  puts "#{select_exhibit.title}"
-          #  puts "#{select_exhibit.date_range}"
-          #  puts "#{select_exhibit.location}"
-          #  puts "#{select_exhibit.description}"
-          #  puts "#{select_exhibit.url}"
-          #if statement end
-        end #each statement end
+      Aic::Exhibit.exhibit_info(current)
+      #current_hash = {} #hash with index being key and exhibit tile as value
+      #Aic::Exhibit.scrape_from_web("http://www.artic.edu/exhibitions/current")
+      #Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
+      #Aic::Exhibit.current.each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
+      #puts "Enter the name of the exhibit or its number for dates, times, and description"
+      #new_input = gets.strip #consider making the following a separate method for repeatability
+      #Aic::Exhibit.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
+      #  if !new_input.to_i.is_a?(Integer) && exhibit.title == current_hash.each {|k,v| v.include?("#{new_input}")}[1]
+      #   puts "#{exhibit.title}"
+      #   puts "#{exhibit.date_range}"
+      #   puts "#{exhibit.location}"
+      #   puts "#{exhibit.description}"
+      #   puts "#{exhibit.url}"
+      # elsif new_input.to_i.is_a?(Integer) && exhibit.title == current_hash[new_input.to_i]
+      #    puts "#{exhibit.title}"
+      #    puts "#{exhibit.date_range}"
+      #    puts "#{exhibit.location}"
+      #    puts "#{exhibit.description}"
+      #    puts "#{exhibit.url}"
+      #  else
+      #    puts "Sorry! I didn't recognize that exhibit."
+      #    Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
+      #    puts "Enter the name of the exhibit or its number for dates, times, and description"
+      #  end  #if statement end
+      #end #each statement end
     when "future" #This should access Exhibit.future--same functionaity as other case value)
       future_exhibits = [] #array of strings
       Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}

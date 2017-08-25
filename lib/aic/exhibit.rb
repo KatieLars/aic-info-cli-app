@@ -21,7 +21,34 @@ class Aic::Exhibit
     end #do
   end #scrape_from_web
 
-  def self.current #creates & returns new Exhibit object based on current site
+  def self.exhibit_info(type)
+    current_hash = {} #hash with index being key and exhibit tile as value
+    self.scrape_from_web("http://www.artic.edu/exhibitions/current")
+    @@current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
+    @@current.each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
+    puts "Enter the name of the exhibit or its number for dates, times, and description"
+    new_input = gets.strip
+    Aic::Exhibit.type.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
+      if !new_input.to_i.is_a?(Integer) && exhibit.title == current_hash.each {|k,v| v.include?("#{new_input}")}[1]
+       puts "#{exhibit.title}"
+       puts "#{exhibit.date_range}"
+       puts "#{exhibit.location}"
+       puts "#{exhibit.description}"
+       puts "#{exhibit.url}"
+     elsif new_input.to_i.is_a?(Integer) && exhibit.title == current_hash[new_input.to_i]
+        puts "#{exhibit.title}"
+        puts "#{exhibit.date_range}"
+        puts "#{exhibit.location}"
+        puts "#{exhibit.description}"
+        puts "#{exhibit.url}"
+      else
+        puts "Sorry! I didn't recognize that exhibit."
+        self.exhibit_info(type)
+      end  #if statement end
+    end #each statement end
+  end #exhibit_info
+
+  def self.current #returns array of current Exhibit objects
     @@current
   end
 
