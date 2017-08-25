@@ -19,7 +19,6 @@ class Aic::Exhibit
         @@future << new_exhibit
       end #if/else
     end #do
-
   end #scrape_from_web
 
   def self.current #creates & returns new Exhibit object based on current site
