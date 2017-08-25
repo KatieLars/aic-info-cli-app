@@ -1,6 +1,6 @@
 require 'nokogiri'
-class Aic::Scraper #I just scrape stuff. Scrip-scrap-scrape, and can see all other objects
-@@exhibits = []
+class Aic::Info
+
   def self.scrape_admission(residency)
     case residency
     when "General"

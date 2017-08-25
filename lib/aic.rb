@@ -1,7 +1,7 @@
 #this is your environment
 require "./lib/aic/version"
 require "./lib/aic/cli"
-require "./lib/aic/aic_scraper"
+require "./lib/aic/info"
 require "./lib/aic/event_date"
 require "./lib/aic/event_type"
 require "./lib/aic/events"

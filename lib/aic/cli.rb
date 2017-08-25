@@ -28,12 +28,11 @@ class Aic::CLI
     puts "For general information, such as hours and admissions, type 'info'"
   end #menu end
 
-  def exhibitions
+  def exhibitions #COMPLETE
     puts "For current exhibitions, enter 'current'"
     puts "For upcoming exhibitions, enter 'upcoming'"
     input = gets.strip
-    if input == "current" || input == "upcoming" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      Aic::Exhibition.scrape_from_web("http://www.artic.edu/exhibitions/#{input}")
+    if input == "current" || input == "upcoming" 
       Aic::Exhibition.exhibit_info("#{input}")
     else
       exhibitions
@@ -42,23 +41,26 @@ class Aic::CLI
 
   def events
     puts "To see a list of all events in the next year, type 'all'"
-    puts "Enter a date or type 'range' to enter a date range and see select events"
+    puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
     puts "To see certain types of events, enter 'type'"
     input = gets.strip
     case input
-    when "all" #returns list of scraped events. Create an #all method?
-      puts "1. The Artist's Studio (Family Program)"
+    when "all" #returns list of scraped events. 20 at a time, dependent on user input
+      #accesses Aic::Events class
+      puts "1. The Artist's Studio (Family Program)" #list is title with event_type.name
       puts "2. Gallery Talk: Gauguin's Circle (Talk)"
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
     when Chronic.parse(input).is_a?(Time) #create a date method?
+      #accesses Aic:: EventDate class
       puts "First Selection"
       #eventually will run event_date_comparison(input)
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
     when "range" #create a range method?
+      #accesses Aic::EventDate class
       puts "Please enter a start date (MM/DD/YYYY)"
       start_date = gets.strip
       puts "Please enter an end date (MM/DD/YYYY)"
@@ -68,7 +70,7 @@ class Aic::CLI
       new_input = gets.strip
       selection(new_input)
     when "type"
-      type
+      #accesses Aic::EventType
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
