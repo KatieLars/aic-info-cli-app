@@ -9,8 +9,8 @@ class Aic::CLI
     menu
     input = gets.strip
     case input
-    when "exhibits"
-      exhibits
+    when "exhibitions"
+      exhibitions
     when "events"
       events
     when "info"
@@ -23,69 +23,21 @@ class Aic::CLI
 
   def menu #COMPLETE
     puts "Come see what's at the Art Institute!"
-    puts "For current and upcoming exhibits, type 'exhibits'"
+    puts "For current and upcoming exhibitions, type 'exhibitions'"
     puts "For upcoming events, type 'events'"
     puts "For general information, such as hours and admissions, type 'info'"
   end #menu end
 
-  def exhibits
-    puts "For current exhibits, enter 'current'"
-    puts "For future exhibits, enter 'future'"
+  def exhibitions
+    puts "For current exhibitions, enter 'current'"
+    puts "For upcoming exhibitions, enter 'upcoming'"
     input = gets.strip
-    case input
-    when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      Aic::Exhibit.exhibit_info("current")
-
-      #current_hash = {} #hash with index being key and exhibit tile as value
-      #Aic::Exhibit.scrape_from_web("http://www.artic.edu/exhibitions/current")
-      #Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
-      #Aic::Exhibit.current.each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
-      #puts "Enter the name of the exhibit or its number for dates, times, and description"
-      #new_input = gets.strip #consider making the following a separate method for repeatability
-      #Aic::Exhibit.current.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
-      #  if !new_input.to_i.is_a?(Integer) && exhibit.title == current_hash.each {|k,v| v.include?("#{new_input}")}[1]
-      #   puts "#{exhibit.title}"
-      #   puts "#{exhibit.date_range}"
-      #   puts "#{exhibit.location}"
-      #   puts "#{exhibit.description}"
-      #   puts "#{exhibit.url}"
-      # elsif new_input.to_i.is_a?(Integer) && exhibit.title == current_hash[new_input.to_i]
-      #    puts "#{exhibit.title}"
-      #    puts "#{exhibit.date_range}"
-      #    puts "#{exhibit.location}"
-      #    puts "#{exhibit.description}"
-      #    puts "#{exhibit.url}"
-      #  else
-      #    puts "Sorry! I didn't recognize that exhibit."
-      #    Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
-      #    puts "Enter the name of the exhibit or its number for dates, times, and description"
-      #  end  #if statement end
-      #end #each statement end
-    when "future" #This should access Exhibit.future--same functionaity as other case value)
-      future_exhibits = [] #array of strings
-      Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| puts "#{i}. #{exhibit_instance.name}"}
-      future_exhibits = Exhibit.self.future.each.with_index(1) {|i, exhibit_instance| "#{i}. #{exhibit_instance.name}"}
-      puts "Enter the name of the exhibit or its number for dates, times, and description"
-      new_input = gets.strip
-      #Exhibit.self.future.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
-      # if input == exhibit.title
-         #puts "#{exhibit.title}"
-         #puts "#{exhibit.date_range}"
-         #puts "#{exhibit.location}"
-         #puts "#{exhibit.description}"
-         #puts "#{exhibit.url}"
-        #elsif input.to_i.is_a?(Integer) #matches number to correct type and lists relevant event info
-          #y = current_exhibits.detect {|string| string.include?(input)} #checking array for numbers, returns string
-          #select_exhibit = Exhibit.self.future.detect {|exhibit_instance| exhibit_instance.title == y.split[1]} #matches title of Exhibit object to title that appears in string
-            #puts "#{select_exhibit.title}"
-            #puts "#{select_exhibit.date_range}"
-            #puts "#{select_exhibit.location}"
-            #puts "#{select_exhibit.description}"
-            #puts "#{select_exhibit.url}"
-          #end #if statement end
-        #end #each statement end
-      #end
-    end #case statements end
+    if input == "current" || input == "upcoming" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
+      Aic::Exhibition.scrape_from_web("http://www.artic.edu/exhibitions/#{input}")
+      Aic::Exhibition.exhibit_info("#{input}")
+    else
+      exhibitions
+    end
   end #exhibits end
 
   def events
