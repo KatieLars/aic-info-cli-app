@@ -34,7 +34,8 @@ class Aic::CLI
     input = gets.strip
     case input
     when "current" #This should access Exhibit.current (class variable), iterate over this array and return the names of the Exhibits
-      Aic::Exhibit.exhibit_info(current)
+      Aic::Exhibit.exhibit_info("current")
+    binding.pry
       #current_hash = {} #hash with index being key and exhibit tile as value
       #Aic::Exhibit.scrape_from_web("http://www.artic.edu/exhibitions/current")
       #Aic::Exhibit.current.each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
