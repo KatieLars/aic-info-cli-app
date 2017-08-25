@@ -1,4 +1,4 @@
-class Aic::Exhibition
+class Aic::Exhibition #COMPLETE but needs type locking & refactoring
   attr_accessor :title, :date_range, :url, :description, :location
   @@current = []
   @@upcoming = []
