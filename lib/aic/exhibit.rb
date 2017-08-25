@@ -24,13 +24,13 @@ class Aic::Exhibit
   def self.exhibit_info(type)
     #need to use the input of type to invoke new class methods
     current_hash = {} #hash with index being key and exhibit tile as value
-    Aic::Exhibit.send ("#{type}") 
     self.scrape_from_web("http://www.artic.edu/exhibitions/#{type}")
-    Aic::Exhibit.send ("#{type}").each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
-    @@current.each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
+    self.send("#{type}").each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
+    self.send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
     puts "Enter the name of the exhibit or its number for dates, times, and description"
     new_input = gets.strip
-    @@.each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
+    binding.pry
+    self.send("#{type}").each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
       if !new_input.to_i.is_a?(Integer) && exhibit.title == current_hash.each {|k,v| v.include?("#{new_input}")}[1]
        puts "#{exhibit.title}"
        puts "#{exhibit.date_range}"
@@ -45,7 +45,7 @@ class Aic::Exhibit
         puts "#{exhibit.url}"
       else
         puts "Sorry! I didn't recognize that exhibit."
-        self.exhibit_info(type)
+        self.exhibit_info("#{type}")
       end  #if statement end
     end #each statement end
   end #exhibit_info
