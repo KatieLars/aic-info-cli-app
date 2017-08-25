@@ -25,13 +25,15 @@ class Aic::Exhibit
     #need to use the input of type to invoke new class methods
     current_hash = {} #hash with index being key and exhibit tile as value
     scrape_from_web("http://www.artic.edu/exhibitions/#{type}")
+    y = send("#{type}")
     send("#{type}").each.with_index(1) {|e, i| puts "#{i}. #{e.title}"}
     send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
 
+    binding.pry
     puts "Enter the name of the exhibit or its number for dates, times, and description"
     new_input = gets.strip
     send("#{type}").each do |exhibit| #iterates over an array of Exhibit Objects and returns info for that event
-      if exhibit.title == current_hash.detect {|k,v| v.include?("#{new_input}")}[1] || current_hash["#{new_input}".to_i]
+      if exhibit.title == (current_hash.detect {|k,v| v.include?("#{new_input}")}[1]) #|| current_hash["#{new_input}".to_i]
        puts "#{exhibit.title}"
        puts "#{exhibit.date_range}"
        puts "#{exhibit.location}"
