@@ -4,10 +4,9 @@ class Aic::EventDate #HAS MANY Event objects
   @@all = []
 
   def initialize
-    @events = []
+    @events = {} #key is EventDate object that points to an array of Events objects based on an objects @date
   end
 
-  #This is a test
 
   # will have to convert the scraped text into a Time object to compare against user input. <=> may be useful as a Time method
   #use Chronic to convert scraped info into Time objects

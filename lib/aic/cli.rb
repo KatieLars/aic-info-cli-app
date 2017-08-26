@@ -41,15 +41,17 @@ class Aic::CLI
   end #exhibits end
 
   def events
-    puts "To see a list of all events in the next year, type 'all'"
+    puts "To see a list of all events in the next month, type 'all'"
     puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
     puts "To see certain types of events, enter 'type'"
+    binding.pry
     input = gets.strip
     case input
-    when "all" #returns list of scraped events. 20 at a time, dependent on user input
-      #accesses Aic::Events class
-      puts "1. The Artist's Studio (Family Program)" #list is title with event_type.name
-      puts "2. Gallery Talk: Gauguin's Circle (Talk)"
+    when "all" #returns list of scraped events for the next month
+      date1 = Time.now
+      date2 = Chronic.parse("one month from #{date1}")
+      Aic::Events.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
+      #returns 
       puts "Enter the name of the event or its number for dates, times, and description"
       new_input = gets.strip
       selection(new_input)
