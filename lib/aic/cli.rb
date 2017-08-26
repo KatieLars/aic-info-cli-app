@@ -32,7 +32,8 @@ class Aic::CLI
     puts "For current exhibitions, enter 'current'"
     puts "For upcoming exhibitions, enter 'upcoming'"
     input = gets.strip
-    if input == "current" || input == "upcoming" 
+    if input == "current" || input == "upcoming"
+      Aic::Exhibition.scrape_from_web("http://www.artic.edu/exhibitions/#{input}")
       Aic::Exhibition.exhibit_info("#{input}")
     else
       exhibitions
