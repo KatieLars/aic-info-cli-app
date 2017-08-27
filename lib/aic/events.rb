@@ -5,7 +5,7 @@ class Aic::Events # HAS ONE EventType, HAS ONE EventDate
 
   def self.scrape_from_web(url)
     doc = Nokogiri::HTML(open("#{url}"))
-    event_array = doc.css(
+    event_array = doc.css("div.calendar-result")
   end #scraper
 
 
