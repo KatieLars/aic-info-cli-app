@@ -45,7 +45,7 @@ class Aic::CLI
     puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
     puts "To see certain types of events, enter 'type'"
     doc = Nokogiri::HTML(open("http://www.artic.edu/calendar?date1=08-26-2017&date2=09-26-2017"))
-    event_array = doc.css("div.calendar-result")
+    event_array = doc.css("div.calendar_result div.views-row")
     binding.pry
     input = gets.strip
     case input
