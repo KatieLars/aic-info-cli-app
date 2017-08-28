@@ -9,7 +9,7 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
     event_array.each do |xml_element| #try to refactor with send
       new_event = Aic::Event.new
       new_event.title = xml_element.css("div.col-wrapper.clearfix div.col-inner div.title.views-field.views-field-title").text
-      new_event.type = Aic::EventType.new(xml_element.css("div.col-wrapper.clearfix div.col-inner div.views-field.views-field-taxonomy").text).name #should hook into EventType
+      new_event.type = Aic::EventType.new(xml_element.css("div.col-wrapper.clearfix div.col-inner div.views-field.views-field-taxonomy").text) #should hook into EventType
       #need to create a new EventType object
       new_event.event_date = Chronic.parse(xml_element.css("div.col-wrapper.clearfix div.col-inner div.date.views-field").text)
       new_event.description = xml_element.css("div.col-wrapper.clearfix div.col-inner div.summary.views-field p").text
@@ -24,8 +24,9 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
   end
 
   def self.event_info #generates event info depending on user input
-    current_hash = {v=[]} #key is index of array, and value is array with title and type as elements
-    @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
+    current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
+    y = @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
+binding.pry
     current_hash.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"}
     puts "Enter the name of the exhibition or its number for dates, times, and description"
     new_input = gets.strip

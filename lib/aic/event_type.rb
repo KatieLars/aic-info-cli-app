@@ -3,19 +3,22 @@ class Aic::EventType #HAS MANY Events
   @@all = Hash.new(v = @events)
 
   def initialize(name)
-    @events = [] #array of Event objects
-    @name = name #add new key and value if one does not already exist
-    @@all[@name] = self.add_events
+    @events = []
+    if name != ""
+      @name = name #add new key and value if one does not already exist
+    else
+      @name = "Misc"
+    end
+    add_events
   end
 
   def add_events #adds Event object to @event array, and returns updated list
-    #problem: right now, events array is blank
-      Aic::Event.all.each do |event_object|
-        if event_object.type == @name
-          @events << event_object
-        end
+    Aic::Event.all.each do |event_object|
+      if event_object.type.name == @name
+        @events << event_object
       end
-    @events
+        @@all[@name] = @events
+    end
   end
 
   def self.all
