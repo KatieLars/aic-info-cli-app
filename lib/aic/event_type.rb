@@ -1,25 +1,21 @@
 class Aic::EventType #HAS MANY Events
-  attr_accessor :name, :events #events is a list of all events for a specific date
-  @@all = {} #key is event type, value is an array listing all events for that type
+  attr_accessor :name, :events
+  @@all = Hash.new(v = @events)
 
   def initialize(name)
-    @events = []
-    @name = name
+    @events = [] #array of Event objects
+    @name = name #add new key and value if one does not already exist
+    @@all[@name] = self.add_events
+binding.pry
   end
 
-  def self.add_to_all
-    new_event = Aic::Event.new
-    if @@all.none? {|k,v| k == new_event.type}
-      @@all[new_event.type] =
+  def add_events #adds Event object to @event array, and returns updated list
+    #problem: right now, events array is blank
+    Aic::Event.all.each do |event_object|
+    if event_object.type == @name
+      @events << event_object
     end
-
-  end
-
-  def add_events #adds Event object to @event array
-    new_event = Aic::Event.new
-    if new_event.type == @name
-      @events << new_event
-    end
+    @events
   end
 
   def self.all
