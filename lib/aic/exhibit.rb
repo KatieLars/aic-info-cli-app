@@ -22,7 +22,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
   end #scrape_from_web
 
   def self.exhibit_info(type) #generates exhibit info depending on user input
-    current_hash = {} #hash with index being key and exhibit tile as value
+    current_hash = {} #hash with index being key and exhibit title as value
     send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
     current_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Enter the name of the exhibition or its number for dates, times, and description"
