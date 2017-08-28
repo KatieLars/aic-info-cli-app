@@ -51,11 +51,7 @@ class Aic::CLI
       date2 = Chronic.parse("one month from date1")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.event_info
-
-
-      puts "Enter the name of the event or its number for dates, times, and description"
-      new_input = gets.strip
-      selection(new_input)
+      
     when Chronic.parse(input).is_a?(Time) #create a date method?
       #accesses Aic:: EventDate class
       puts "First Selection"

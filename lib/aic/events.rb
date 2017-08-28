@@ -1,6 +1,6 @@
 
 class Aic::Event # HAS ONE EventType, HAS ONE EventDate
-  attr_accessor :title, :type, :event_date, :time, :url, :description
+  attr_accessor :title, :type, :date, :time, :url, :description
   @@all = [] #array with all events
 
   def self.scrape_from_web(url) #creates Event objects from URL
@@ -11,11 +11,12 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
       new_event.title = xml_element.css("div.col-wrapper.clearfix div.col-inner div.title.views-field.views-field-title").text
       new_event.type = Aic::EventType.new(xml_element.css("div.col-wrapper.clearfix div.col-inner div.views-field.views-field-taxonomy").text) #should hook into EventType
       #need to create a new EventType object
-      new_event.event_date = Chronic.parse(xml_element.css("div.col-wrapper.clearfix div.col-inner div.date.views-field").text)
-      new_event.description = xml_element.css("div.col-wrapper.clearfix div.col-inner div.summary.views-field p").text
+      new_event.date = Chronic.parse(xml_element.css("div.col-wrapper.clearfix div.col-inner div.date.views-field").text)
+      new_event.description = xml_element.css("div.col-wrapper.clearfix div.col-inner div.summary.views-field p").text.strip
       new_event.url = "http://www.artic.edu" + xml_element.css("div.col-wrapper.clearfix div.col-inner div.title.views-field.views-field-title a").attribute("href").text
       new_event.time = xml_element.css("div.col-wrapper.clearfix div.col-inner div.time.views-field").text
       @@all << new_event
+
     end
   end #scraper
 
@@ -25,24 +26,32 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
 
   def self.event_info #generates event info depending on user input
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
-    y = @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-binding.pry
+    @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     current_hash.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"}
     puts "Enter the name of the exhibition or its number for dates, times, and description"
     new_input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
-      send("#{type}").each do |exhibit|
-        if exhibit.title.include? (current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}[1])
-          puts "#{exhibit.title}"
-          puts "#{exhibit.date_range}"
-          puts "#{exhibit.location}"
-          puts "#{exhibit.description}"
-          puts "#{exhibit.url}"
-        end #inner if statement must stay
-      end #each end
+      occurs = []
+      @@all.each do |event|
+        if event.title.include? (current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}[1][0])
+          occurs << event
+        end #if statement
+      end # all each end
+      occurs
+        puts "#{occurs[0].title}"
+        puts "#{occurs[0].type.name}"
+        puts "#{occurs[0].description}"
+        puts ""
+        puts "When:"
+      occurs.each do |e|
+        puts "#{e.date.strftime("%m-%d-%Y")}"
+        puts "#{e.time}"
+        puts "#{e.url}"
+        puts ""
+      end #occurs each
      elsif current_hash.none? {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
-       puts "Sorry! I can't find that exhibition."
-       exhibit_info(type) #need to not accumulate lists . . .
+       puts "Sorry! I can't find that event."
+       event_info
      end #outer if statement
   end #exhibit_info
   #event_date is Time object
