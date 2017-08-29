@@ -28,16 +28,18 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     nested_arrays = current_hash.to_a.each_slice(20).to_a
-    nested_arrays[counter].each do |nest|
+    nested_arrays[0].each do |nest| #for each nested array, puts o
       puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+      counter += 1
     end #nested_arrays
-    counter += 1
   end
 
 
   def self.event_info #generates event info depending on user inp
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
+    current_hash.collect {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"} #does this for first 20 pair
+binding.pry
     puts "Enter exhibition name or number for dates, times, and description."
     puts "Or enter 'more' to see the next 20 events."
     input = gets.strip

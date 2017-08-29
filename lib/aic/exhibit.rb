@@ -11,7 +11,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
       new_exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
       new_exhibit.date_range = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
       new_exhibit.location = xml_element.css("div.views-field.views-field-field-exhibition-room div.field-content").text
-      new_exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").first.text
+      new_exhibit.description = xml_element.css("div.views-field.views-field-body span.field-content").first.text.strip
       new_exhibit.url = "http://www.artic.edu" + xml_element.css("div.views-field.views-field-title span.field-content a").attribute("href").text
       if url.include?("current")
         @@current << new_exhibit
@@ -24,7 +24,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
   def self.exhibit_info(type) #generates exhibit info depending on user input
     current_hash = {} #hash with index being key and exhibit title as value
     send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
-    current_hash.each_slice(20) {|k,v| puts "#{k}. #{v}"}
+    current_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Enter the name of the exhibition or its number for dates, times, and description"
 
     new_input = gets.strip
