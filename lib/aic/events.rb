@@ -28,7 +28,7 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     nested_arrays = current_hash.to_a.each_slice(20).to_a
-    counter = 0
+    counter = 0 #this is resetting the counter to 0 and causing it to double print optsion
     nested_arrays[counter].each do |nest|
       puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
     end #nested_arrays
@@ -57,10 +57,9 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
       end #occurs each
     elsif input == "more"
       #
-      nested_arrays[counter].each do |nest|
-        puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
-      end #nested_arrays
-      counter += 1
+      #nested_arrays[counter].each do |nest|
+      #  puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+      #end #nested_arrays
       event_info
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        puts "Sorry! I can't find that event."
