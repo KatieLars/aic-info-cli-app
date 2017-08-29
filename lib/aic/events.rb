@@ -27,13 +27,19 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
   def self.event_info #generates event info depending on user input
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-    current_hash.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"}
-    puts "Enter the name of the exhibition or its number for dates, times, and description"
-    new_input = gets.strip
-    if current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
+    nested_arrays = current_hash.to_a.each_slice(20).to_a
+    counter = 0
+    nested_arrays[counter].each do |nest|
+      puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+    end #nested_arrays
+    counter += 1
+    puts "Enter exhibition name or number for dates, times, and description."
+    puts "Or enter 'more' to see the next 20 events."
+    input = gets.strip
+    if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
       occurs = []
       @@all.each do |event|
-        if event.title.include? (current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}[1][0])
+        if event.title.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
           occurs << event
         end #if statement
       end # all each end
@@ -49,7 +55,14 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
         puts "#{e.url}"
         puts ""
       end #occurs each
-     elsif current_hash.none? {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
+    elsif input == "more"
+      #
+      nested_arrays[counter].each do |nest|
+        puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+      end #nested_arrays
+      counter += 1
+      event_info
+     elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        puts "Sorry! I can't find that event."
        event_info
      end #outer if statement
