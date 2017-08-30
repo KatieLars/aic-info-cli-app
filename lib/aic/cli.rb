@@ -53,14 +53,16 @@ class Aic::CLI
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.event_info
     when "today" #works
-      date1 = Time.now
-      Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
+      #date1 = Time.now
+      Aic::Event.scrape_from_web("http://www.artic.edu/calendar")
       Aic::Event.event_info
-    when "Today" #works
-      date1 = Time.now
-      Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
+    when "Today" #rerunning and printing out list doubled WTF
+      #date1 = Time.now
+      Aic::Event.scrape_from_web("http://www.artic.edu/calendar") #?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
       Aic::Event.event_info
-    #when Chronic.parse("#{input}").is_a?(Time)
+
+    #when (Chronic.parse("#{input}").is_a?(Time))#I want this to be a Time--more flexible
+      #Chronic.parse("#{input}").is_a?(Time)
     #  date1 = Chronic.parse("#{input}")
     #  Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
     #  Aic::Event.event_info
