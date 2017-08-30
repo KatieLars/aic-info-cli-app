@@ -90,38 +90,6 @@ class Aic::CLI
     admission
   end #info end
 
-    def selection(choice) #selects the name of an Event or the integer indicating its title, and returns Event info
-      #EventType.all.each do |k,v| #iterates over a hash and returns Type.events.title for correct type
-      # if input == k.name #if input matches name of EventType
-         #events_array = k.events.collect {|e| e.title} #returns array of event titles
-         #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
-        #end #if statement end
-        #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
-          #y = type_menu.each {|string| string.include?(input)} checking array for numbers, returns string
-          #x = y.split
-          #EventType.each do |type_instance|
-            #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
-          #end #each statement end
-        #end #if statement end
-      #end #all.each end
-      if choice.to_i.is_a?(Integer)
-        puts "First selection"
-      #elsif choice matches any of the names of exhibits/events,
-        #return all the info (title, dates, location, url, description, type, etc.)
-      else
-        puts "Second selection"
-      end #if end
-    end#selection end
-
-    def event_date_comparison(start_date, end_date = 0) #accepts a string of numbers (MM/DD/YYY) and returns them as a Time object
-      start = Chronic.parse(start_date)
-      if end_date != 0
-        over = Chronic.parse(end_date)
-      end #if statement end
-      #lists Event.title where all Event.date == start
-      #lists Event.title where all Event.date.between?(start, over)
-    end #event_date_comparison end
-
     def type
       puts "Please choose from one of the following categories, entering either the name or number:"
       #counter = 1
