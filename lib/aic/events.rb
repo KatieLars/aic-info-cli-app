@@ -26,6 +26,7 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
   end
 
   def self.event_info
+    sleep(0.5)
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     nested_arrays = current_hash.to_a.each_slice(20).to_a
@@ -38,6 +39,7 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
     puts "Or enter 'more' to see the next 20 events."
     input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+      sleep(0.5)
       occurs = []
       @@all.each do |event|
         if event.title.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
@@ -57,9 +59,11 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
         puts ""
       end #occurs each
     elsif input == "more" #puts next twenty results and returns to the main menu
+      sleep(0.5)
       @@counter += 1
       event_info
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+       sleep(0.5)
        puts "Sorry! I can't find that event."
        event_info
      end #outer if statement
