@@ -27,21 +27,36 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
   def self.event_menu#puts first 20 events
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-    nested_arrays = current_hash.to_a.each_slice(20).to_a
-    counter = 0
-    binding.pry
-    nested_arrays[0].each do |nest| #need the index to change
-        puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
-    end #nested_arrays
+    #current_hash.take(group.to_i += 20).each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"}
+    #nested_arrays = current_hash.to_a.each_slice(20).to_a
+    current_hash.each do |k,v|
+      if (x = 0) < k && k <= (y = 0)
+        puts "#{k}. #{v[0]} (#{v[1]})"
+        x +=20
+        y +=20
+      end
+
+    end
+
+    #[*1..nested_arrays.size]
+    #nested_arrays[group].each do |nest| #need the index to change
+    #    puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+    #end #nested_arrays
   end
 
   def self.first_menu #puts just the first 20
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-    nested_arrays = current_hash.to_a.each_slice(20).to_a
-    nested_arrays[0].each do |nest| #need the index to change
-        puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
-    end #nested_arrays
+    #nested_arrays = current_hash.to_a.each_slice(20).to_a
+    #current_hash.collect do |k,v|
+    #  if 0 < k && <=20
+    #    puts "#{k}. #{v[0]} (#{v[1]})"
+    #  end
+    #end
+    #current_hash.take(20).each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"}
+    #nested_arrays[0].each do |nest| #need the index to change
+    #    puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+    #end #nested_arrays
     puts "Enter exhibition name or number for dates, times, and description."
     puts "Or enter 'more' to see the next 20 events."
   end
@@ -50,15 +65,14 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
     #"dat#{i}" = nested_arrays[i]
   #end
 
-  def self.event_info #generates event info depending on user inp
+  def self.event_info
     current_hash = Hash.new(v=[])#key is index of array, and value is array with title and type as elements
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-    self.event_menu
     #current_hash.collect {|k,v| puts "#{k}. #{v[0]} (#{v[1]})"} #does this for first 20 pair
-    puts "Enter exhibition name or number for dates, times, and description."
-    puts "Or enter 'more' to see the next 20 events."
+
     input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+
       occurs = []
       @@all.each do |event|
         if event.title.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
@@ -77,12 +91,15 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
         puts "#{e.url}"
         puts ""
       end #occurs each
-    elsif input == "more"
-      self.event_menu(1)
+    elsif input == "more" #puts next twenty results and returns to the main menu
+      self.event_menu
+      puts "Enter exhibition name or number for dates, times, and description."
+      puts "Or enter 'more' to see the next 20 events."
       event_info
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        puts "Sorry! I can't find that event."
        event_info
+
      end #outer if statement
   end #exhibit_info
   #event_date is Time object
