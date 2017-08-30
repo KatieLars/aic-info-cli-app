@@ -40,39 +40,45 @@ class Aic::CLI
     end
   end #exhibits end
 
-  def events
+  def events #needs refactoring
     puts "To see a list of the first twenty events in the next month, type 'all'"
     puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
+    puts "You may also enter 'today' to see today's events."
     puts "To see certain types of events, enter 'type'"
     input = gets.strip
     case input
-    when "all" #returns list of first 20 scraped events for the next month
-      
+    when "all" #works
       date1 = Time.now
       date2 = Chronic.parse("one month from date1")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.event_info
-
-    when Chronic.parse("#{input}").is_a?(Time)
+    when "today" #works
+      date1 = Time.now
+      Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
+      Aic::Event.event_info
+    when "Today" #works
+      date1 = Time.now
+      Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
+      Aic::Event.event_info
+    #when Chronic.parse("#{input}").is_a?(Time)
+    #  date1 = Chronic.parse("#{input}")
+    #  Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
+    #  Aic::Event.event_info
+    when "range" #works
+      puts "Please enter a start date (MM/DD/YYYY)"
+      date1 = Chronic.parse("#{gets.strip}")
+      puts "Please enter an end date (MM/DD/YYYY)"
+      date2 = Chronic.parse("#{gets.strip}")
+      Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
+      Aic::Event.event_info
+    when "type"
+      #accesses Aic::EventType
+    end #case statement end
+    if Chronic.parse("#{input}").is_a?(Time) #works
       date1 = Chronic.parse("#{input}")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
       Aic::Event.event_info
-    when "range" #create a range method?
-      #accesses Aic::EventDate class
-      puts "Please enter a start date (MM/DD/YYYY)"
-      start_date = gets.strip
-      puts "Please enter an end date (MM/DD/YYYY)"
-      end_date = gets.strip
-      #eventually will run event_date_comparison(start_date, end_date)
-      puts "Enter the name of the event or its number for dates, times, and description"
-      new_input = gets.strip
-      selection(new_input)
-    when "type"
-      #accesses Aic::EventType
-      puts "Enter the name of the event or its number for dates, times, and description"
-      new_input = gets.strip
-      selection(new_input)
-    end #case statement end
+    end
   end #events end
 
   def info

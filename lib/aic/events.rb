@@ -68,7 +68,4 @@ class Aic::Event # HAS ONE EventType, HAS ONE EventDate
        event_info
      end #outer if statement
   end #exhibit_info
-  #event_date is Time object
-  #Dates should only be added to the hash if there isn't already
-  #type lock @time, @event_date
 end

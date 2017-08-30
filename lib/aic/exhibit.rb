@@ -26,7 +26,6 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
     send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
     current_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Enter the name of the exhibition or its number for dates, times, and description"
-
     new_input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
       send("#{type}").each do |exhibit|
