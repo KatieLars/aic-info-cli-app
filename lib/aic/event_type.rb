@@ -26,40 +26,53 @@ class Aic::EventType #HAS MANY Events
     @@all
   end
 
-  def self.select_type #return a numbered list of available Types 20 at a time
-    #@@counter may be able to be formatted as a local variable
-    if @@all.size >= 20
-      nested_arrays = @@all.to_a.each_slice(20).to_a
-        if @@counter <= nested_arrays.size
-          nested_arrays[@@counter].each do |nest|
-            puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
-          end #nested_arrays
-        end #@@counter if
-      else
-         @@all.each {|k,v| puts "#{@@counter += 1}. #{k}"}
-      end #@@all > 20
+  def self.select_type
+    type_hash = Hash.new
+    @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
+    type_hash.each {|k,v| puts "#{k}. #{v}"}
+    puts "Select an event type or number to see a list of all that type of event"
+  end
+
+  def self.event_list #this method is problematic . . .
+    current_hash = Hash.new
+    @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
+    @@all.each do |k,v| #needs to match the detected type name
+      if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
+        #returns list of first 20 events
+        if v.size >= 20 #v is an array of Event Objects
+          split_array = v.each_slice(20).to_a
+          split_array[@@counter].each.with_index(1) do |event_obj,i|
+            puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
+          end #split_array each
+        else
+          v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
+        end #v.size
+      end #if statement k.include?
+    end #all each statement
+      puts "Enter an event name or number for dates, times, and description."
+      puts "Or enter 'more' to see the next 20 events."
   end
 
   def self.type_info #select a type from the list above, and its going to puts out a list of events
-    puts "Select an event type or number to see a list of all that type of event"
     current_hash = Hash.new
-    @@all.each {|k,v| current_hash[@@counter += 1] = "#{v}"}
-    binding.pry
+    @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
     input = gets.strip
-    #returns list of event names for selected type
     #user types in option from select_type or number
     #access @@all to return the appropriate Event object titles (20 at a time)
     #list of Event object titles, and user can select specific event
-    case input
-    when #word found in event type or number corresponding to list
+    if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+      self.event_list
+      elsif input == "more" #reveals next 20 events
+        @@counter += 1
+        self.event_list
       #pops into @@all, selects the appropriate type key, and returns values as list, 20 at a time
       #pops back into Events to get info for selected events
-    when "more"
+    #when "more"
       #puts the next 20 in list and run type_info again
-    when #anything else
-      puts "Sorry! I didn't recoginze that event type."
-      type_info
-    end #case end
+    #when #anything else
+      #puts "Sorry! I didn't recoginze that event type."
+      #type_info
+    end #big if statement
 
   end
 
