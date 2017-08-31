@@ -32,6 +32,7 @@ class Aic::Event # HAS ONE EventType
     case first_input
     when "type"
       Aic::EventType.select_type
+      Aic::EventType.type_info
       #go into EventType and grab events
     when "next"
     current_hash = Hash.new(v=[])
