@@ -40,11 +40,11 @@ class Aic::CLI
     end
   end #exhibits end
 
-  def events #needs refactoring
+  def events #needs refactoring #enter dates first, then see straight up list or organize by type
     puts "To see a list of the first twenty events in the next month, type 'all'"
     puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
     puts "You may also enter 'today' to see today's events."
-    puts "To see certain types of events, enter 'type'"
+    #puts "To see certain types of events, enter 'type'"
     input = gets.strip
     case input
     when "all" #works

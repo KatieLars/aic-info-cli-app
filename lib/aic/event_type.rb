@@ -1,6 +1,7 @@
 class Aic::EventType #HAS MANY Events
   attr_accessor :name, :events
   @@all = Hash.new(v = @events)
+  @@counter = 0
 
   def initialize(name)
     @events = []
@@ -25,8 +26,18 @@ class Aic::EventType #HAS MANY Events
     @@all
   end
 
-  def self.select_type
-    
+  def self.select_type #return a numbered list of available Types 20 at a time
+
+    if @@all.size > 20
+      nested_arrays = @@all.to_a.each_slice(20).to_a
+
+        if @@counter <= nested_arrays.size
+          nested_arrays[@@counter].each do |nest|
+            puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
+          end #nested_arrays
+        end #@@counter if
+      end #@@all > 20
+  #  @@all.each {|k,v| puts "#{@@counter += 1}. #{k}"}
   end
 
   #EventTypes have: a list of all Event objects that correspond to them. They also have names generated from a scraper

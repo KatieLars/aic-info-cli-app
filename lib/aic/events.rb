@@ -31,6 +31,7 @@ class Aic::Event # HAS ONE EventType
     first_input = gets.strip
     case first_input
     when "type"
+      binding.pry
       Aic::EventType.select_type
       #go into EventType and grab events
     when "next"
