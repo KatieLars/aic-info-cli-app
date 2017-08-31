@@ -26,6 +26,14 @@ class Aic::Event # HAS ONE EventType
 
   def self.event_info
     sleep(0.5)
+    puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+    puts "Or type 'next' to see a list of events"
+    first_input = gets.strip
+    case first_input
+    when "type"
+      Aic::EventType.select_type
+      #go into EventType and grab events
+    when "next"
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     if current_hash.size >= 20
@@ -39,7 +47,6 @@ class Aic::Event # HAS ONE EventType
         current_hash.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})}"}
     end
     puts "Enter an event name or number for dates, times, and description."
-    puts "Enter 'type' to see a list of event types (Talks, Screenings, etc.) during this date range"
     puts "Or enter 'more' to see the next 20 events."
     input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
@@ -66,12 +73,13 @@ class Aic::Event # HAS ONE EventType
       @@counter += 1
       event_info
     elsif input == "type"
-      #puts out a list of types applicable to events in the date range
-      
+      #puts out a numbered list of types applicable to events in the date range
+      Aic::EventType.all.each {|k,v| puts "#{k}"}
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        sleep(0.5)
        puts "Sorry! I can't find that event."
        event_info
      end #outer if statement
+   end #case statement
   end #exhibit_info
 end
