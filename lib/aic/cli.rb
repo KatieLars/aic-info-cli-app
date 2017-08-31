@@ -76,7 +76,7 @@ class Aic::CLI
     when "type"
       #accesses Aic::EventType
     end #case statement end
-    if Chronic.parse("#{input}").is_a?(Time) #works
+    if Chronic.parse("#{input}").is_a?(Time) && !input == "today" && !input == "Today"#works
       date1 = Chronic.parse("#{input}")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
       Aic::Event.event_info
