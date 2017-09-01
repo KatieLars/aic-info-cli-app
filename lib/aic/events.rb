@@ -24,7 +24,7 @@ class Aic::Event # HAS ONE EventType
     @@all
   end
 
-  def self.event_info
+  def self.event_menu
     sleep(0.5)
     puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
     puts "Or type 'next' to see a list of events"

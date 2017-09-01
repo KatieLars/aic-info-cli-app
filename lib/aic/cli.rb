@@ -51,15 +51,15 @@ class Aic::CLI
       date1 = Time.now
       date2 = Chronic.parse("one month from date1")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
-      Aic::Event.event_info
+      Aic::Event.event_menu
     when "today" #works
       #date1 = Time.now
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar")
-      Aic::Event.event_info
+      Aic::Event.event_menu
     when "Today" #rerunning and printing out list doubled WTF
       #date1 = Time.now
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar") #?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
-      Aic::Event.event_info
+      Aic::Event.event_menu
     #when (Chronic.parse("#{input}").is_a?(Time))#I want this to be a Time--more flexible
       #Chronic.parse("#{input}").is_a?(Time)
     #  date1 = Chronic.parse("#{input}")
@@ -71,7 +71,7 @@ class Aic::CLI
       puts "Please enter an end date (MM/DD/YYYY)"
       date2 = Chronic.parse("#{gets.strip}")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
-      Aic::Event.event_info
+      Aic::Event.event_menu
   #  when "type" #display all events of a certain type for a specified date range
         #Aic::Event.scrape_from_web
       #accesses Aic::EventType
@@ -79,7 +79,7 @@ class Aic::CLI
     if Chronic.parse("#{input}").is_a?(Time) && !input == "today" && !input == "Today"#works
       date1 = Chronic.parse("#{input}")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
-      Aic::Event.event_info
+      Aic::Event.event_menu
     end
   end #events end
 
