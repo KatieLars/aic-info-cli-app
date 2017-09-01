@@ -52,35 +52,41 @@ class Aic::Event # HAS ONE EventType
     input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
       sleep(0.5)
-      occurs = []
-      @@all.each do |event|
-        if event.title.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
-          occurs << event
-        end #if statement
-      end # all each end
-      occurs
-        puts "#{occurs[0].title}"
-        puts "#{occurs[0].type.name}"
-        puts "#{occurs[0].description}"
-        puts "When:"
-      occurs.each do |e|
-        puts "#{e.date.strftime("%m-%d-%Y")}"
-        puts "#{e.time}"
-        puts "#{e.url}"
-        puts ""
-      end #occurs each
+      self.event_info(current_hash, input)
     elsif input == "more" #working #puts next twenty results and returns to the main menu
       sleep(0.5)
       @@counter += 1
-      event_info
+      event_menu
     elsif input == "type"
       #puts out a numbered list of types applicable to events in the date range
       Aic::EventType.all.each {|k,v| puts "#{k}"}
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        sleep(0.5)
        puts "Sorry! I can't find that event."
-       event_info
+       event_menu
      end #outer if statement
    end #case statement
-  end #exhibit_info
+  end #event_menu
+
+  def self.event_info(event_hash, input)
+    occurs = []
+    @@all.each do |event|
+      if event.title.include? (event_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
+        occurs << event
+      end #if statement
+    end # all each end
+    occurs
+      puts "#{occurs[0].title}"
+      puts "#{occurs[0].type.name}"
+      puts "#{occurs[0].description}"
+      puts "When:"
+    occurs.each do |e|
+      puts "#{e.date.strftime("%m-%d-%Y")}"
+      puts "#{e.time}"
+      puts "#{e.url}"
+      puts ""
+    end #occurs each
+  end #event_info
+
+
 end
