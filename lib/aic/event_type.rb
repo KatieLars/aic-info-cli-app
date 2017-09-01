@@ -34,7 +34,8 @@ class Aic::EventType #HAS MANY Events
   end
 
   def self.event_list #lists events based on type PROBLEM WITH INPUTS
-    input = gets.strip #this input is the selection of a type
+   #this input is the selection of a type
+   input = gets.strip
     current_hash = Hash.new
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
@@ -55,7 +56,12 @@ class Aic::EventType #HAS MANY Events
     #select_event_array
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
-      event_details(select_event_hash) #events of the select type
+      new_input = gets.strip
+      if input == "more"
+        #code
+      else
+        event_details(select_event_hash) #events of the select type
+      end #more input
 
   end #event_list
 #remember that@@all points to an array (v is an array)
@@ -64,23 +70,49 @@ class Aic::EventType #HAS MANY Events
       #selecting an event to get the deets
       if a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
         #input matches presented event options
-
         #need to take out all events matching that input
         found_events = [] #array of all events fitting input
-         y = a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1]
-         found_events << a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1]
+        x =  a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1].title
+        #x is event title to match to all objects
+        if a_hash.detect {|k,v|  v.title.include?("#{x}")}
+          z = a_hash.select {|k,v|  v.title.include?("#{x}")}
+          #z is a hash of relevant events
+          z.each {|k,v| found_events << v}
+          puts "#{found_events[0].title}"
+          puts "#{found_events[0].type.name}"
+          puts "#{found_events[0].description}"
+          puts "When:"
+          found_events.each do |e|
+            puts "#{e.date.strftime("%m-%d-%Y")}"
+            puts "#{e.time}"
+            puts "#{e.url}"
+            puts ""
+        end #a_hash.detect
+      end #outer if statement
+    elsif input_1 == "more"
+      #should return next 20 items in the list but
+      current_hash = Hash.new
+      select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
+      @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
+          @@all.each do |k,v| #needs to match the detected type name or
+            if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
+          #returns list of first 20 events
+              v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj}
+            if v.size >= 20 #v is an array of Event Objects
+              split_array = v.each_slice(20).to_a
+              split_array[@@counter].each.with_index(1) do |event_obj,i|
+                puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
+              end #split_array each
+            else
+              v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
+            end #v.size this returns a 20 item list
+        end #all each statement
+      end #if statement
+      #select_event_array
+        puts "Enter an event name or number for dates, times, and description."
+        puts "Or enter 'more' to see the next 20 events."
+      event_details(a_hash)
 
-        puts "#{found_events[0].title}"
-        puts "#{found_events[0].type.name}"
-        puts "#{found_events[0].description}"
-        puts "When:"
-        binding.pry
-      y.each do |e|
-        puts "#{e.date.strftime("%m-%d-%Y")}"
-        puts "#{e.time}"
-        puts "#{e.url}"
-        puts ""
-      end #y[1]
     end #a_hash detect
      #if select_event_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_}".to_i}[1]
       #occurs = []
