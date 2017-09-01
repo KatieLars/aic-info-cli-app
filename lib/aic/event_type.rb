@@ -37,25 +37,26 @@ class Aic::EventType #HAS MANY Events
     input = gets.strip #this input is the selection of a type
     current_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
-    @@all.each do |k,v| #needs to match the detected type name
       if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
+        @@all.each do |k,v| #needs to match the detected type name
+      #if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
         #returns list of first 20 events
-        if v.size >= 20 #v is an array of Event Objects
-          split_array = v.each_slice(20).to_a
-          split_array[@@counter].each.with_index(1) do |event_obj,i|
-            puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
-          end #split_array each
-        else
-          v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
-        end #v.size this returns a 20 item list
-      end #if statement k.include?
-    end #all each statement
+          if v.size >= 20 #v is an array of Event Objects
+            split_array = v.each_slice(20).to_a
+            split_array[@@counter].each.with_index(1) do |event_obj,i|
+              puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
+            end #split_array each
+          else
+            v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
+          end #v.size this returns a 20 item list
+      end #all each statement
+    end #if statement
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
       event_details(current_hash)
   end #event_list
 
-  def self.event_details(a_hash)
+  def self.event_details(a_hash) #generates details for list or next 20 in list
       input_1 = gets.strip #this input is event number  or more
       if a_hash.detect {|k,v| v.include?("#{input_1}") || k == "#{input_1}".to_i}
         sleep(0.5)
@@ -69,6 +70,25 @@ class Aic::EventType #HAS MANY Events
           event_list
       end #big if statement
   end
+
+  def self.20_events #just generates list of 20 events
+    input = gets.strip #this input is the selection of a type
+    current_hash = Hash.new
+    @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
+    @@all.each do |k,v| #needs to match the detected type name
+      if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
+        #returns list of first 20 events
+        if v.size >= 20 #v is an array of Event Objects
+          split_array = v.each_slice(20).to_a
+          split_array[@@counter].each.with_index(1) do |event_obj,i|
+            puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
+          end #split_array each
+        else
+          v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
+        end #v.size this returns a 20 item list
+      end #if statement k.include?
+    end #all each statement
+  end #20_events
 
   #def self.type_info #select a type from the list above, and its going to puts out a list of events
   #  current_hash = Hash.new
