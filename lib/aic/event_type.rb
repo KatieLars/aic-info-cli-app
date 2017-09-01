@@ -47,19 +47,23 @@ class Aic::EventType #HAS MANY Events
           end #split_array each
         else
           v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
-        end #v.size
+        end #v.size this returns a 20 item list
       end #if statement k.include?
     end #all each statement
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
-      input_1 = gets.strip
-      if current_hash.detect {|k,v| v.include?("#{input_1}") || k == "#{input_1}".to_i}
+      event_details(current_hash)
+  end #event_list
+
+  def self.event_details(a_hash)
+      input_1 = gets.strip #this input is event number  or more
+      if a_hash.detect {|k,v| v.include?("#{input_1}") || k == "#{input_1}".to_i}
         sleep(0.5)
-        Aic::Event.event_info(current_hash, input)
-      elsif input == "more" #reveals next 20 events
+        Aic::Event.event_info(a_hash, input_1)
+      elsif input_1 == "more" #reveals next 20 events
           @@counter += 1
-          self.event_list
-      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+          event_list
+      elsif a_hash.none? {|k,v| v.include?("#{input_1}") || k == "#{input_1}".to_i}
           sleep(0.5)
           puts "Sorry! I can't find that event."
           event_list
