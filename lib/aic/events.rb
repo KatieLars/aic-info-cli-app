@@ -24,17 +24,20 @@ class Aic::Event # HAS ONE EventType
     @@all
   end
 
-  def self.event_menu
+  def self.type_or_next #determines if user stays in Events or goes to EventTypes
     sleep(0.5)
-    puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
-    puts "Or type 'next' to see a list of events"
     first_input = gets.strip
     case first_input
     when "type"
       Aic::EventType.select_type
       Aic::EventType.type_info
-      #go into EventType and grab events
     when "next"
+      self.event_menu
+    end #case statment
+  end #type_or_next
+
+
+  def self.event_menu #returns list of events to choose from
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     if current_hash.size >= 20
@@ -65,7 +68,6 @@ class Aic::Event # HAS ONE EventType
        puts "Sorry! I can't find that event."
        event_menu
      end #outer if statement
-   end #case statement
   end #event_menu
 
   def self.event_info(event_hash, input)

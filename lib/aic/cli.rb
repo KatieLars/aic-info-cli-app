@@ -48,16 +48,20 @@ class Aic::CLI
     input = gets.strip
     case input
     when "all" #works
+      puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+      puts "Or type 'next' to see a list of events"
       date1 = Time.now
       date2 = Chronic.parse("one month from date1")
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.event_menu
     when "today" #works
-      #date1 = Time.now
+      puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+      puts "Or type 'next' to see a list of events"
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar")
       Aic::Event.event_menu
-    when "Today" #rerunning and printing out list doubled WTF
-      #date1 = Time.now
+    when "Today"
+      puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+      puts "Or type 'next' to see a list of events"
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar") #?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
       Aic::Event.event_menu
     #when (Chronic.parse("#{input}").is_a?(Time))#I want this to be a Time--more flexible
@@ -70,6 +74,8 @@ class Aic::CLI
       date1 = Chronic.parse("#{gets.strip}")
       puts "Please enter an end date (MM/DD/YYYY)"
       date2 = Chronic.parse("#{gets.strip}")
+      puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+      puts "Or type 'next' to see a list of events"
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.event_menu
   #  when "type" #display all events of a certain type for a specified date range
@@ -78,6 +84,8 @@ class Aic::CLI
     end #case statement end
     if Chronic.parse("#{input}").is_a?(Time) && !input == "today" && !input == "Today"#works
       date1 = Chronic.parse("#{input}")
+      puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+      puts "Or type 'next' to see a list of events"
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
       Aic::Event.event_menu
     end
