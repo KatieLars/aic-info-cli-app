@@ -31,11 +31,13 @@ class Aic::EventType #HAS MANY Events
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
     type_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Select an event type or number to see a list of all that type of event"
+    input = gets.strip
+    event_list(input)
   end
 
-  def self.event_list #lists events based on type PROBLEM WITH INPUTS
+  def self.event_list(input) #lists events based on type PROBLEM WITH INPUTS
    #this input is the selection of a type
-   input = gets.strip
+    #input = gets.strip
     current_hash = Hash.new
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
@@ -57,8 +59,9 @@ class Aic::EventType #HAS MANY Events
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
       new_input = gets.strip
-      if input == "more"
-        #code
+      if new_input == "more"
+        @@counter += 1
+        event_list(input)
       else
         event_details(select_event_hash) #events of the select type
       end #more input

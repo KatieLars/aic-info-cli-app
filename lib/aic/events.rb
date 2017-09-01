@@ -30,7 +30,7 @@ class Aic::Event # HAS ONE EventType
     case first_input
     when "type"
       Aic::EventType.select_type
-      Aic::EventType.event_list
+      #Aic::EventType.event_list
     when "next"
       self.event_menu
     end #case statment
@@ -43,6 +43,7 @@ class Aic::Event # HAS ONE EventType
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     if current_hash.size >= 20
       nested_arrays = current_hash.to_a.each_slice(20).to_a
+    
         if @@counter <= nested_arrays.size
           nested_arrays[@@counter].each do |nest|
             puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
