@@ -30,7 +30,7 @@ class Aic::Event # HAS ONE EventType
     case first_input
     when "type"
       Aic::EventType.select_type
-      Aic::EventType.type_info
+      Aic::EventType.event_list
     when "next"
       self.event_menu
     end #case statment
@@ -60,9 +60,9 @@ class Aic::Event # HAS ONE EventType
       sleep(0.5)
       @@counter += 1
       event_menu
-    elsif input == "type"
+    #elsif input == "type"
       #puts out a numbered list of types applicable to events in the date range
-      Aic::EventType.all.each {|k,v| puts "#{k}"}
+    #  Aic::EventType.all.each {|k,v| puts "#{k}"}
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        sleep(0.5)
        puts "Sorry! I can't find that event."

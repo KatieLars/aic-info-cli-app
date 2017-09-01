@@ -26,14 +26,15 @@ class Aic::EventType #HAS MANY Events
     @@all
   end
 
-  def self.select_type
+  def self.select_type #generates a list of types for specified date range
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
     type_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Select an event type or number to see a list of all that type of event"
   end
 
-  def self.event_list #this method is problematic . . .
+  def self.event_list #lists events based on type
+    input = gets.strip #this input is the selection of a type
     current_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
     @@all.each do |k,v| #needs to match the detected type name
@@ -51,20 +52,32 @@ class Aic::EventType #HAS MANY Events
     end #all each statement
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
+      input_1 = gets.strip
+      if current_hash.detect {|k,v| v.include?("#{input_1}") || k == "#{input_1}".to_i}
+        sleep(0.5)
+        Aic::Event.event_info(current_hash, input)
+      elsif input == "more" #reveals next 20 events
+          @@counter += 1
+          self.event_list
+      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+          sleep(0.5)
+          puts "Sorry! I can't find that event."
+          event_list
+      end #big if statement
   end
 
-  def self.type_info #select a type from the list above, and its going to puts out a list of events
-    current_hash = Hash.new
-    @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
-    input = gets.strip
+  #def self.type_info #select a type from the list above, and its going to puts out a list of events
+  #  current_hash = Hash.new
+  #  @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
+  #  input = gets.strip
     #user types in option from select_type or number
     #access @@all to return the appropriate Event object titles (20 at a time)
     #list of Event object titles, and user can select specific event
-    if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
-      self.event_list
-      elsif input == "more" #reveals next 20 events
-        @@counter += 1
-        self.event_list
+  #  if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+  #    self.event_list
+  #    elsif input == "more" #reveals next 20 events
+  #      @@counter += 1
+  #      self.event_list
       #pops into @@all, selects the appropriate type key, and returns values as list, 20 at a time
       #pops back into Events to get info for selected events
     #when "more"
@@ -72,9 +85,9 @@ class Aic::EventType #HAS MANY Events
     #when #anything else
       #puts "Sorry! I didn't recoginze that event type."
       #type_info
-    end #big if statement
+    #end #big if statement
 
-  end
+  #end
 
   #EventTypes have: a list of all Event objects that correspond to them. They also have names generated from a scraper
   #@@all is a hash that keeps track of how many of each Event type there is. Keys are EventType objects and values are the number of that type.
