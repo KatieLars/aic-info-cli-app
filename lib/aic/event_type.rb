@@ -48,10 +48,12 @@ class Aic::EventType #HAS MANY Events
             v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj}
 
           if v.size >= 20 #v is an array of Event Objects
-            split_array = v.each_slice(20).to_a
-            binding.pry
-            split_array[@@counter].each.with_index(1) do |event_obj,i|
-              puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
+            split_array = select_event_hash.each_slice(20).to_a
+            split_array[@@counter].each do |small_e|
+              small_e.each do |d|
+                
+
+              puts "#{event_obj[0][0]}. #{event_obj[0].title} (#{event_obj.type.name})"
             end #split_array each
           else
             v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
