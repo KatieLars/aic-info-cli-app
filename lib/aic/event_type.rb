@@ -41,12 +41,15 @@ class Aic::EventType #HAS MANY Events
     current_hash = Hash.new
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
+
         @@all.each do |k,v| #needs to match the detected type name or
           if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
         #returns list of first 20 events
             v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj}
+
           if v.size >= 20 #v is an array of Event Objects
             split_array = v.each_slice(20).to_a
+            binding.pry
             split_array[@@counter].each.with_index(1) do |event_obj,i|
               puts "#{i}. #{event_obj.title} (#{event_obj.type.name})"
             end #split_array each
