@@ -62,15 +62,20 @@ class Aic::EventType #HAS MANY Events
   def self.event_details(a_hash) #generates details for list or next 20 in list
       input_1 = gets.strip #this input is an event indicator or "more"
       #selecting an event to get the deets
-      if a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1]
-        y = a_hash.each {|k,v|  v.title.detect("#{input_1}") || k == "#{input_1}".to_i}[1]
-        #y is an event object--I want it to collect all event objects that it can find
-        binding.pry
-        puts "#{y.title}"
-        puts "#{y.type.name}"
-        puts "#{y.description}"
+      if a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
+        #input matches presented event options
+
+        #need to take out all events matching that input
+        found_events = [] #array of all events fitting input
+         y = a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1]
+         found_events << a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1]
+
+        puts "#{found_events[0].title}"
+        puts "#{found_events[0].type.name}"
+        puts "#{found_events[0].description}"
         puts "When:"
-      y[1].each do |e|
+        binding.pry
+      y.each do |e|
         puts "#{e.date.strftime("%m-%d-%Y")}"
         puts "#{e.time}"
         puts "#{e.url}"
