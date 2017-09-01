@@ -38,6 +38,7 @@ class Aic::Event # HAS ONE EventType
 
 
   def self.event_menu #returns list of events to choose from
+    #needs to be refactored so that each event is only included once on the list if it is a repeat
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     if current_hash.size >= 20
