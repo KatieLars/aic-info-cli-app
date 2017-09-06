@@ -14,7 +14,8 @@ end
     price_array = doc.css("div.pricing-container")
     case residency
     when "General"
-      
+      binding.pry
+
 
     when "Illinois"
       #scrapes code for Illinois residents and re-organizes it
