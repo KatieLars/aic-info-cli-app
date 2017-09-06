@@ -5,7 +5,7 @@ class Aic::Info
   @@students = {}
   @@teens = {}
 
-  def self.scrape_admission(livin)
+  def self.scrape_admission
 
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
     price_array = doc.css("div.pricing-container") #only 1 element--Nodeset
@@ -24,14 +24,14 @@ class Aic::Info
       @@teens["Illinois"] = price_array.css("tr:nth-child(5) td.pricing-illres").text
     end
 
-    binding.pry
-
   end #scrape_admission end
 
   def self.prices(residency)
+    doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
+    binding.pry
+
     case residency
     when "General"
-
       puts "Adults: #{@@adults["General"]}"
       puts "Seniors (65+): #{@@seniors["General"]}"
       puts "Students: #{@@students["General"]}"
@@ -47,8 +47,10 @@ class Aic::Info
       puts "Students: #{@@students["Chicago"]}"
       puts "Teens (ages 14-17): #{@@teens["Chicago"]}"
     when "Free"
-      puts "Kids under 14 are always free"
-      puts "Free Thursday evenings for Illinois residents"
+      free_info = doc.css("h2#FreeAdmissionOpportunities ~ h4").to_a
+      free_desc = doc.css("h2#FreeAdmissionOpportunities ~ p").to_a
+      free_info.each do |xml_el|
+        xml_el.
 
       #scrapes code for free admission opportunities and re-organizes it
     end #case end
