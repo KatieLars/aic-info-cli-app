@@ -26,7 +26,7 @@ class Aic::EventType #HAS MANY Events
     @@all
   end
 
-  def self.select_type #generates a list of types for specified date range
+  def self.select_type # generates a list of types for specified date range
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
     type_hash.each {|k,v| puts "#{k}. #{v}"}
@@ -54,27 +54,25 @@ class Aic::EventType #HAS MANY Events
           end #v.size this returns a 20 item list
       end #all each statement
     end #if statement
-    #select_event_array
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
-      new_input = gets.strip
-      if new_input == "more"
+      input_1 = gets.strip
+      if input_1 == "more"
         @@counter += 1
-        event_list(input)
+        event_list(gets.strip)
       else
-        event_details(select_event_hash) #events of the select type
+        event_details(select_event_hash, input_1) #events of the select type
       end #more input
 
   end #event_list
 #remember that@@all points to an array (v is an array)
-  def self.event_details(a_hash) #generates details for list or next 20 in list
-      input_1 = gets.strip #this input is an event indicator or "more"
+  def self.event_details(a_hash, input) #generates details for list or next 20 in list
       #selecting an event to get the deets
-      if a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
+      if a_hash.detect {|k,v|  v.title.include?("#{input}") || k == "#{input}".to_i}
         #input matches presented event options
         #need to take out all events matching that input
         found_events = [] #array of all events fitting input
-        x =  a_hash.detect {|k,v|  v.title.include?("#{input_1}") || k == "#{input_1}".to_i}[1].title
+        x =  a_hash.detect {|k,v|  v.title.include?("#{input}") || k == "#{input}".to_i}[1].title
         #x is event title to match to all objects
         if a_hash.detect {|k,v|  v.title.include?("#{x}")}
           z = a_hash.select {|k,v|  v.title.include?("#{x}")}
