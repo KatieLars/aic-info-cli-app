@@ -47,10 +47,18 @@ class Aic::Info
       puts "Students: #{@@students["Chicago"]}"
       puts "Teens (ages 14-17): #{@@teens["Chicago"]}"
     when "Free"
-      free_info = doc.css("h2#FreeAdmissionOpportunities ~ h4").to_a
-      free_desc = doc.css("h2#FreeAdmissionOpportunities ~ p").to_a
-      free_info.each do |xml_el|
-        xml_el.
+      free_info = []
+      free_desc = []
+      free_hash ={} #key is header from free_info, value is description from free_desc
+      doc.css("h2#FreeAdmissionOpportunities ~ h4").to_a.each do |e|
+        free_info << e.text
+      end
+      doc.css("h2#FreeAdmissionOpportunities ~ p").to_a.each do |e|
+        free_desc << e.text
+      end
+      #headings are first and then
+
+
 
       #scrapes code for free admission opportunities and re-organizes it
     end #case end
