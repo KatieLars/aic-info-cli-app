@@ -108,6 +108,7 @@ class Aic::CLI
         z = admission_list.select {|e| e.include?("#{input}")}.join.split[1] #returns string without integer ("Illinois")
         Aic::Info.scrape_admission
         Aic::Info.prices("#{z}")
+      
         #Scraper.send("scrape_admission", "#{z}")
         #takes the string result of z, and #sends it to the Scraper method #scrape_admission with an argument of z
       else
