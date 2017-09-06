@@ -100,40 +100,13 @@ class Aic::CLI
     admission
   end #info end
 
-    def type
-      puts "Please choose from one of the following categories, entering either the name or number:"
-      #counter = 1
-      #type_menu = []
-      #Event.all.each do |k,v| #creates type_menu array and puts list of options
-        #type_menu << "#{counter +1}. #{k}"
-        #puts "#{counter +1}. #{k}\n"
-        #counter += 1
-      #end #each end
-      #type_menu
-        #@@all is a hash with types being the keys, and number of events of each type, the values. Sorted with high values first.
-      input = gets.strip #input must match menu option (number or words) and then puts a list of all the events in that type
-        #EventType.all.each do |k,v| #iterates over a hash and returns Type.events.title for correct type
-        # if input == k.name #if input matches name of EventType
-           #events_array = k.events.collect {|e| e.title} #returns array of event titles
-           #events_array.each.with_index(1) {|i, e| puts "#{i}. #{e}\n"
-          #end #if statement end
-          #if input.to_i.is_a?(Integer) matches number to correct type and produces list of events for that type
-            #y = type_menu.each {|string| string.include?(input)} checking array for numbers, returns string
-            #x = y.split
-            #EventType.each do |type_instance|
-              #puts "#{type_instance.name.include?(x[1]).events}" #returns the events list from the type instance that includes
-            #end #each statement end
-          #end #if statement end
-        #end #all.each end
-      #returns a list of all events names of that type
-    end #type end
-
     def admission
       admission_list = ["1. General", "2. Illinois", "3. Chicago", "4. Free"]
       admission_list.each {|e| puts "#{e}\n"}
       input = gets.strip
-      if admission_list.each {|e| e.include?(input)} #if input maches one of the admission_list options
-        z = admission_list.select {|e| e.include?(input)}.join.split[1] #returns string without integer ("Illinois")
+      if admission_list.each {|e| e.include?("#{input}")} #if input maches one of the admission_list options
+        z = admission_list.select {|e| e.include?("#{input}")}.join.split[1] #returns string without integer ("Illinois")
+        binding.pry
         #Scraper.send("scrape_admission", "#{z}")
         #takes the string result of z, and #sends it to the Scraper method #scrape_admission with an argument of z
       else

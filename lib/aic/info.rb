@@ -1,10 +1,21 @@
 require 'nokogiri'
 class Aic::Info
+attr_accessor :adults, :seniors, :students, :teens
 
-  def self.scrape_admission(residency)
+def initialize #each method is a hash with keys pointing to residency type and value to the price
+  @adults = {}
+  @seniors = {}
+  @students = {}
+  @teens = {}
+end
+
+  def self.scrape_admission(residency) #input is one of four options
+    doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
+    price_array = doc.css("div.pricing-container")
     case residency
     when "General"
-      #scrapes code for General admission and re-organizes it
+      
+
     when "Illinois"
       #scrapes code for Illinois residents and re-organizes it
     when "Chicago"
