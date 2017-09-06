@@ -9,7 +9,7 @@ def initialize #each method is a hash with keys pointing to residency type and v
   @teens = {}
 end
 
-  def self.scrape_admission(residency) #input is one of four options
+  def self.scrape_admission
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
     price_array = doc.css("div.pricing-container") #only 1 element--Nodeset
     price_array.each do |xml_element|
@@ -20,25 +20,39 @@ end
       new_info.seniors["General"] = price_array.css("tr:nth-child(3) td.pricing-ga").text
       new_info.seniors["Chicago"] = price_array.css("tr:nth-child(3) td.pricing-chires").text
       new_info.seniors["Illinois"] = price_array.css("tr:nth-child(3) td.pricing-illres").text
-      new_info.students["General"]
-      new_info.students["Chicago"]
-      new_info.students["Illinois"]
-      new_info.teens["General"]
-      new_info.teens["Chicago"]
-      new_info.teens["Illinois"]
+      new_info.students["General"] = price_array.css("tr:nth-child(4) td.pricing-ga").text
+      new_info.students["Chicago"] = price_array.css("tr:nth-child(4) td.pricing-chires").text
+      new_info.students["Illinois"] = price_array.css("tr:nth-child(4) td.pricing-illres").text
+      new_info.teens["General"] = price_array.css("tr:nth-child(5) td.pricing-ga").text
+      new_info.teens["Chicago"] = price_array.css("tr:nth-child(5) td.pricing-chires").text
+      new_info.teens["Illinois"] = price_array.css("tr:nth-child(5) td.pricing-illres").text
+    end
+  end #scrape_admission end
+
+  def prices(residency)
     case residency
     when "General"
-
-
-
+      puts "Adults: #{@adults["General"]}"
+      puts "Seniors (65+): #{@seniors["General"]}"
+      puts "Students: #{@students["General"]}"
+      puts "Teens (ages 14-17): #{@teens["General"]}"
     when "Illinois"
-      #scrapes code for Illinois residents and re-organizes it
+      puts "Adults: #{@adults["Illinois"]}"
+      puts "Seniors (65+): #{@seniors["Illinois"]}"
+      puts "Students: #{@students["Illinois"]}"
+      puts "Teens (ages 14-17): #{@teens["Illinois"]}"
     when "Chicago"
-      #scrapes code for Chicago residents and re-organizes it
+      puts "Adults: #{@adults["Chicago"]}"
+      puts "Seniors (65+): #{@seniors["Chicago"]}"
+      puts "Students: #{@students["Chicago"]}"
+      puts "Teens (ages 14-17): #{@teens["Chicago"]}"
     when "Free"
+      puts "Kids under 14 are always free"
+      puts "Free Thursday evenings for Illinois residents"
+      puts ""
       #scrapes code for free admission opportunities and re-organizes it
     end #case end
-  end #general admission end
+
 
 #  def self.scrape_exhibits(url) #creates Exhibit objects from either upcoming or current website
 #    new_exhibit = Aic::Exhibit.new
