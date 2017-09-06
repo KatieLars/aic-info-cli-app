@@ -11,10 +11,24 @@ end
 
   def self.scrape_admission(residency) #input is one of four options
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
-    price_array = doc.css("div.pricing-container")
+    price_array = doc.css("div.pricing-container") #only 1 element--Nodeset
+    price_array.each do |xml_element|
+      new_info = Aic::Info.new
+      new_info.adults["General"] = price_array.css("tr:nth-child(2) td.pricing-ga").text
+      new_info.adults["Chicago"] = price_array.css("tr:nth-child(2) td.pricing-chires").text
+      new_info.adults["Illinois"] = price_array.css("tr:nth-child(2) td.pricing-illres").text
+      new_info.seniors["General"] = price_array.css("tr:nth-child(3) td.pricing-ga").text
+      new_info.seniors["Chicago"] = price_array.css("tr:nth-child(3) td.pricing-chires").text
+      new_info.seniors["Illinois"] = price_array.css("tr:nth-child(3) td.pricing-illres").text
+      new_info.students["General"]
+      new_info.students["Chicago"]
+      new_info.students["Illinois"]
+      new_info.teens["General"]
+      new_info.teens["Chicago"]
+      new_info.teens["Illinois"]
     case residency
     when "General"
-      binding.pry
+
 
 
     when "Illinois"
