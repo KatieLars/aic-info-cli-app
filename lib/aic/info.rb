@@ -55,13 +55,11 @@ class Aic::Info
       doc.css("h2#FreeAdmissionOpportunities ~ p").to_a.each do |e|
         free_desc << e.text #values
       end
-
       passport_desc = free_desc.slice!(-1).split(".")
-
       passport_desc.slice!(-1)
       free_desc.slice!(-1) #useless element
       passport_head = free_info.slice!(-1)
-      free_hash = Hash[free_info.zip(free_desc)] ########################
+      free_hash = Hash[free_info.zip(free_desc)]
       free_hash.each do |k,v|
         puts "#{k}"
         puts "#{v}"
