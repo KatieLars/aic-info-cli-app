@@ -30,7 +30,7 @@ class Aic::EventType #HAS MANY Events
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
     type_hash.each {|k,v| puts "#{k}. #{v}"}
-    puts "Select the number of the event to see a list of all that type of event"
+    puts "Select the number of the event type to see a list of all its events"
     input = gets.strip
     event_list(input)
   end
@@ -39,35 +39,33 @@ class Aic::EventType #HAS MANY Events
     sleep(0.5)
     current_hash = Hash.new
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
+    unique_hash = {}
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
+    if current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
         @@all.each do |k,v| #needs to match the detected type name or
-          if k.detect (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
-            #k.include? may be a problem here . . .Family program and Talk appears in different types of events
-        #returns list of first 20 events
-            v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
-            unique_array = []
-            v.each do |e| #v is an array of Event Objects
-              if !unique_array.include?("#{e.title}")
-                unique_array << e.title
-              end #if unique_array.include?
-            end #v.each do
+          #if current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
+          v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
+          unique_array = []
+          v.each do |e| #v is an array of Event Objects
+            if !unique_array.include?("#{e.title}")
+              unique_array << e.title
+            end #if unique_array.include?
+          end #v.each do
             if unique_array.size >= 20
-              unique_hash = {}
               unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
               nested_arrays = unique_hash.to_a.each_slice(20).to_a #nested array where each element is an array of 20 elements
-              nested_arrays[@@counter].each do |small_e|
-                puts "#{small_e[0]}. #{small_e[1]}"
-              binding.pry
-              end #nested_arrays
-
+              nested_arrays[@@counter].each {|small_e| puts "#{small_e[0]}. #{small_e[1]}"}
             else
             unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
-            end #v.size this returns a 20 item list
-          end #k.include?
-        end #all.each statement
+            end #unique_array.size
+          end #all.each
+      #elsif current_hash.none? {|k,v| v == "#{input}" || k == "#{input}".to_i}
+      #      puts "Sorry! I couldn't find that type of event."
+      end #current_hash statement
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
       input_1 = gets.strip
+      #PROBLEM:
       if input_1 == "more"
         @@counter += 1
         event_list(input)
@@ -76,22 +74,16 @@ class Aic::EventType #HAS MANY Events
           sleep(1.0)
           event_list(input)
       else
-        event_details(select_event_hash, input_1)
-     #events of the select type
+        event_details(unique_hash, select_event_hash, input_1)
       end #more input
   end #event_list
 #remember that@@all points to an array (v is an array)
-  def self.event_details(a_hash, input) #generates details for list or next 20 in list
-      sleep(0.5)
-      if a_hash.detect {|k,v|  v.title.include?("#{input}") || k == "#{input}".to_i}
-        #input matches presented event options
-        #need to take out all events matching that input
+  def self.event_details(unique_hash, all_hash, input) #generates details for list or next 20 in list
+      sleep(0.5) #input is either event title or number
+      y = unique_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}[1]
+      if all_hash.detect {|k,v|  v.title == "#{y}"}
         found_events = [] #array of all events fitting input
-        x =  a_hash.detect {|k,v|  v.title.include?("#{input}") || k == "#{input}".to_i}[1].title
-        #x is event title to match to all objects
-        if a_hash.detect {|k,v|  v.title.include?("#{x}")}
-          z = a_hash.select {|k,v|  v.title.include?("#{x}")}
-          #z is a hash of relevant events
+          z = all_hash.select {|k,v|  v.title == "#{y}"}
           z.each {|k,v| found_events << v}
           puts "#{found_events[0].title}"
           puts "#{found_events[0].type.name}"
@@ -103,8 +95,7 @@ class Aic::EventType #HAS MANY Events
             puts "#{e.url}"
             puts ""
           end #found_events
-        end #a_hash detect
-        elsif a_hash.none? {|k,v| v.include?("#{input_1}") || k == "#{input_1}".to_i}
+        elsif all_hash.none? {|k,v| v == "#{y}"}
           sleep(0.5)
             puts "Sorry! I can't find that event."
       end #if statement
