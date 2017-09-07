@@ -52,11 +52,18 @@ class Aic::EventType #HAS MANY Events
               end #if unique_array.include?
             end #v.each do
             if unique_array.size >= 20
-              nested_arrays = unique_array.each_slice(20).to_a #nested array where each element is an array of 20 elements
-              nested_arrays[@@counter].each.with_index(1) do |small_e, i|
+              unique_hash = {}
+              unique_array.each {|e,i| unique_hash[i] = e}
+              n_arr = unique_hash.to_a
+              nested_arrays = unique_hash.to_a.each_slice(20).to_a #nested array where each element is an array of 20 elements
+              nested_arrays[@@counter].each do |small_e|
+                small_e.each do |nesters|
+                  puts "#{nesters[0]}. #{nesters[1]}"
+                end #small_e
+              end #nested_arrays
                 #PROBLEM: need new indexes for next list of 20.
               #only returns a list of UNIQUE event titles, not unique events
-              puts "#{i}. #{small_e}"
+
               end #split_array each
             else
             unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
