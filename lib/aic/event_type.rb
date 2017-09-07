@@ -42,18 +42,30 @@ class Aic::EventType #HAS MANY Events
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
         @@all.each do |k,v| #needs to match the detected type name or
           if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
+            #k.include? may be a problem here
         #returns list of first 20 events
-            v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj}
-          if v.size >= 20 #v is an array of Event Objects
-            split_array = select_event_hash.each_slice(20).to_a
-            split_array[@@counter].each do |small_e|
-              puts "#{small_e[0]}. #{small_e[1].title} (#{small_e[1].type.name})"
-            end #split_array each
-          else
+            v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
+            unique_array = []
+            v.each do |e|
+              if !unique_array.include?("#{e.title}")
+                unique_array << e.title
+              end #if unique_array.include?
+            end #v.each do
+            if unique_array.size >= 20 #v is an array of Event Objects
+
+              #from v create a new array that contains only original event titles
+              #
+              nested_arrays = unique_array.each_slice(20).to_a #nested array where each element is an array of 20 elements
+              binding.pry
+              nested_arrays[@@counter].each do |small_e|
+              #only returns a list of UNIQUE event titles, not unique events
+              puts "#{small_e[0]}. #{small_e.title}"
+              end #split_array each
+            else
             v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
-          end #v.size this returns a 20 item list
-      end #all each statement
-    end #if statement
+            end #v.size this returns a 20 item list
+          end #k.include?
+        end #all.each statement
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
       input_1 = gets.strip
@@ -71,7 +83,7 @@ class Aic::EventType #HAS MANY Events
   end #event_list
 #remember that@@all points to an array (v is an array)
   def self.event_details(a_hash, input) #generates details for list or next 20 in list
-      #selecting an event to get the deets
+      sleep(0.5)
       if a_hash.detect {|k,v|  v.title.include?("#{input}") || k == "#{input}".to_i}
         #input matches presented event options
         #need to take out all events matching that input
