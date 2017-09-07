@@ -36,7 +36,7 @@ class Aic::EventType #HAS MANY Events
   end
 
   def self.event_list(input) #lists events based on type
-    #problem: has to enter new_input twice to get this to work in more functionality
+    sleep(0.5)
     current_hash = Hash.new
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}

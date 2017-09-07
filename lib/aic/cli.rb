@@ -51,7 +51,7 @@ class Aic::CLI
     input = gets.strip
     case input
     when "all" #works
-      sleep(0.5)
+      sleep (0.5)
       puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
       puts "Or type 'next' to see a list of events"
       date1 = Time.now
