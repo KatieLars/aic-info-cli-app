@@ -42,27 +42,24 @@ class Aic::EventType #HAS MANY Events
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
         @@all.each do |k,v| #needs to match the detected type name or
           if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
-            #k.include? may be a problem here
+            #k.include? may be a problem here . . .Family program and Talk appears in different types of events
         #returns list of first 20 events
             v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
             unique_array = []
-            v.each do |e|
+            v.each do |e| #v is an array of Event Objects
               if !unique_array.include?("#{e.title}")
                 unique_array << e.title
               end #if unique_array.include?
             end #v.each do
-            if unique_array.size >= 20 #v is an array of Event Objects
-
-              #from v create a new array that contains only original event titles
-              #
+            if unique_array.size >= 20
               nested_arrays = unique_array.each_slice(20).to_a #nested array where each element is an array of 20 elements
-              binding.pry
-              nested_arrays[@@counter].each do |small_e|
+              nested_arrays[@@counter].each.with_index(1) do |small_e, i|
+                #PROBLEM: need new indexes for next list of 20.
               #only returns a list of UNIQUE event titles, not unique events
-              puts "#{small_e[0]}. #{small_e.title}"
+              puts "#{i}. #{small_e}"
               end #split_array each
             else
-            v.each {|event_object| puts "#{@@counter += 1}. #{event_object.title}"}
+            unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
             end #v.size this returns a 20 item list
           end #k.include?
         end #all.each statement
