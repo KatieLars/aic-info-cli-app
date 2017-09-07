@@ -30,7 +30,7 @@ class Aic::EventType #HAS MANY Events
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
     type_hash.each {|k,v| puts "#{k}. #{v}"}
-    puts "Select an event type or number to see a list of all that type of event"
+    puts "Select the number of the event to see a list of all that type of event"
     input = gets.strip
     event_list(input)
   end
@@ -41,7 +41,7 @@ class Aic::EventType #HAS MANY Events
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
         @@all.each do |k,v| #needs to match the detected type name or
-          if k.include? (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
+          if k.detect (current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1])
             #k.include? may be a problem here . . .Family program and Talk appears in different types of events
         #returns list of first 20 events
             v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
@@ -53,18 +53,13 @@ class Aic::EventType #HAS MANY Events
             end #v.each do
             if unique_array.size >= 20
               unique_hash = {}
-              unique_array.each {|e,i| unique_hash[i] = e}
-              n_arr = unique_hash.to_a
+              unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
               nested_arrays = unique_hash.to_a.each_slice(20).to_a #nested array where each element is an array of 20 elements
               nested_arrays[@@counter].each do |small_e|
-                small_e.each do |nesters|
-                  puts "#{nesters[0]}. #{nesters[1]}"
-                end #small_e
+                puts "#{small_e[0]}. #{small_e[1]}"
+              binding.pry
               end #nested_arrays
-                #PROBLEM: need new indexes for next list of 20.
-              #only returns a list of UNIQUE event titles, not unique events
 
-              end #split_array each
             else
             unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
             end #v.size this returns a 20 item list
