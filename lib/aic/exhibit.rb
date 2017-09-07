@@ -4,6 +4,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
   @@upcoming = []
 
   def self.scrape_from_web(url) #scrapes creates Exhibit objects from either upcoming or current website
+    
     doc = Nokogiri::HTML(open("#{url}"))
     exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
     exhibit_array.each do |xml_element| #try to refactor with send
@@ -30,6 +31,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
     if current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
       send("#{type}").each do |exhibit|
         if exhibit.title.include? (current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}[1])
+          sleep(1.0)
           puts "#{exhibit.title}"
           puts "#{exhibit.date_range}"
           puts "#{exhibit.location}"
@@ -38,6 +40,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
         end #inner if statement must stay
       end #each end
      elsif current_hash.none? {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
+       sleep(0.5)
        puts "Sorry! I can't find that exhibition."
        exhibit_info(type) #need to not accumulate lists . . .
      end #outer if statement

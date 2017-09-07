@@ -29,10 +29,12 @@ class Aic::CLI
   end #menu end
 
   def exhibitions #COMPLETE
+    sleep(0.5)
     puts "For current exhibitions, enter 'current'"
     puts "For upcoming exhibitions, enter 'upcoming'"
     input = gets.strip
     if input == "current" || input == "upcoming"
+
       Aic::Exhibition.scrape_from_web("http://www.artic.edu/exhibitions/#{input}")
       Aic::Exhibition.exhibit_info("#{input}")
     else
@@ -41,6 +43,7 @@ class Aic::CLI
   end #exhibits end
 
   def events #needs refactoring #enter dates first, then see straight up list or organize by type
+    sleep(0.5)
     puts "To see a list of the first twenty events in the next month, type 'all'"
     puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
     puts "You may also enter 'today' to see today's events."
@@ -48,6 +51,7 @@ class Aic::CLI
     input = gets.strip
     case input
     when "all" #works
+      sleep(0.5)
       puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
       puts "Or type 'next' to see a list of events"
       date1 = Time.now
@@ -108,7 +112,7 @@ class Aic::CLI
         z = admission_list.select {|e| e.include?("#{input}")}.join.split[1] #returns string without integer ("Illinois")
         Aic::Info.scrape_admission
         Aic::Info.prices("#{z}")
-      
+
         #Scraper.send("scrape_admission", "#{z}")
         #takes the string result of z, and #sends it to the Scraper method #scrape_admission with an argument of z
       else
