@@ -30,9 +30,8 @@ class Aic::EventType #HAS MANY Events
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
     type_hash.each {|k,v| puts "#{k}. #{v}"}
-    puts "Select the number of the event type to see a list of all its events"
+    puts "Select the number of the event type or enter the type name to see a list of all relevant events"
     input = gets.strip
-
     if type_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
       event_list(input)
     else
@@ -41,7 +40,8 @@ class Aic::EventType #HAS MANY Events
     end
   end
 
-  def self.event_list(input) #lists events based on type
+  def self.event_list(input)
+    orig_in = input #lists events based on type
     sleep(0.5)
     current_hash = Hash.new
     select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
@@ -73,16 +73,16 @@ class Aic::EventType #HAS MANY Events
       puts "Or enter 'more' to see the next 20 events."
       input_1 = gets.strip
       if input_1 == "more"
-        @@counter += 1
-        event_list(input)
+        event_list(orig_in)
       elsif select_event_hash.none? {|k,v| v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
-          puts "Sorry! I can't find that event."
-          sleep(1.0)
-          event_list(input)
+        puts "Sorry! I can't find that event."
+        sleep(1.0)
+        event_list(orig_in)
       else
         event_details(unique_hash, select_event_hash, input_1)
-      end #more input
+      end
   end #event_list
+
 #remember that@@all points to an array (v is an array)
   def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
       sleep(0.5) #input is either event title or number
@@ -104,14 +104,9 @@ class Aic::EventType #HAS MANY Events
         elsif all_hash.none? {|k,v| v == "#{y}"}
           sleep(0.5)
           puts "Sorry! I can't find that event."
-
+          event_list(input)
       end #if statement
   end
-
-  #EventTypes have: a list of all Event objects that correspond to them. They also have names generated from a scraper
-  #@@all is a hash that keeps track of how many of each Event type there is. Keys are EventType objects and values are the number of that type.
-  #Types should only be added to EventType iff there isn't already one present in the hash. Otherwise, the values for the
-    #appropriate key should tick up one.
   #Control for type: events should always be Event objects
 
 end
