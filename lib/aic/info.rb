@@ -6,9 +6,8 @@ class Aic::Info
   @@teens = {}
 
   def self.scrape_admission
-
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
-    price_array = doc.css("div.pricing-container") #only 1 element--Nodeset
+    price_array = doc.css("div.pricing-container") 
     price_array.each do |xml_element|
       @@adults["General"] = price_array.css("tr:nth-child(2) td.pricing-ga").text
       @@adults["Chicago"] = price_array.css("tr:nth-child(2) td.pricing-chires").text
