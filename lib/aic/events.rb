@@ -40,16 +40,28 @@ class Aic::Event # HAS ONE EventType
     #needs to be refactored so that each event is only included once on the list if it is a repeat
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-    if current_hash.size >= 20
-      nested_arrays = current_hash.to_a.each_slice(20).to_a
-
+    unique_array = [] #elements are Event title strings
+    unique_hash = {} #keys are numbers, values are Event objects
+    @@all.each do |e|
+      if !unique_array.include?("#{e.title}")
+        unique_array << e.title
+      end #if !unique_array
+      if !unique_hash.detect {|k,v| v.title == e.title}
+        unique_array.to_a.each do |nesters|
+          unique_hash[nesters[0]] = e
+        end #current_hash.to_a
+      end #if !unique_hash
+    end #@@all.each do
+    if unique_array.size >= 20
+      nested_arrays = unique_array.to_a.each_slice(20).to_a
+      binding.pry
         if @@counter <= nested_arrays.size
           nested_arrays[@@counter].each do |nest|
             puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
           end #nested_arrays
         end #@@counter if
       else
-        current_hash.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})}"}
+        unique_array.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})}"}
     end
     puts "Enter an event name or number for dates, times, and description."
     puts "Or enter 'more' to see the next 20 events."
