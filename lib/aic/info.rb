@@ -28,7 +28,6 @@ class Aic::Info
 
   def self.prices(residency)
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
-
     case residency
     when "General"
       puts "Adults: #{@@adults["General"]}"
@@ -67,9 +66,32 @@ class Aic::Info
       end
       puts "#{passport_head}"
       puts "#{passport_desc.join(".")}.)"
+
       #scrapes code for free admission opportunities and re-organizes it
     end #case end
+    repeat_or_exit
   end #prices
+
+  def self.repeat_or_exit
+    puts ""
+    puts "To see more admission fees, please select another residency (Chicago, Illinois, General, Free) option."
+    puts "Or type 'exit' to exit."
+    input = gets.strip
+    case input
+    when "exit"
+      exit
+    when "General"
+      prices(input)
+    when "Illinois"
+      prices(input)
+    when "Chicago"
+      prices(input)
+    when "Free"
+      prices(input)
+    else
+      repeat_or_exit
+    end
+  end
 
   #scraper should also scrape for EventTypes and they should be added to EventType.all if they are new and
   #scraper should scrape code from Exhibit page, Calendar page, Admission page, Description pages for individual Events and exhibits
