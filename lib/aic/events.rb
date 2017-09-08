@@ -25,7 +25,6 @@ class Aic::Event # HAS ONE EventType
   end
 
   def self.type_or_next #determines if user stays in Events or goes to EventTypes
-  
     first_input = gets.strip
     case first_input
     when "type"
