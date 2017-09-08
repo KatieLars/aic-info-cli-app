@@ -32,7 +32,13 @@ class Aic::EventType #HAS MANY Events
     type_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Select the number of the event type to see a list of all its events"
     input = gets.strip
-    event_list(input)
+
+    if type_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
+      event_list(input)
+    else
+      puts"Sorry! I couldn't find that type of event."
+      select_type
+    end
   end
 
   def self.event_list(input) #lists events based on type
@@ -43,9 +49,10 @@ class Aic::EventType #HAS MANY Events
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
     if current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
         @@all.each do |k,v| #needs to match the detected type name or
-          #if current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
+          if k == current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}[1]
           v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
-          unique_array = []
+          unique_array = [] #v and select_event_hash are the same except v is an array, and the other is a hash
+          #binding.pry
           v.each do |e| #v is an array of Event Objects
             if !unique_array.include?("#{e.title}")
               unique_array << e.title
@@ -56,16 +63,15 @@ class Aic::EventType #HAS MANY Events
               nested_arrays = unique_hash.to_a.each_slice(20).to_a #nested array where each element is an array of 20 elements
               nested_arrays[@@counter].each {|small_e| puts "#{small_e[0]}. #{small_e[1]}"}
             else
+            unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
             unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
             end #unique_array.size
           end #all.each
-      #elsif current_hash.none? {|k,v| v == "#{input}" || k == "#{input}".to_i}
-      #      puts "Sorry! I couldn't find that type of event."
+        end #k==
       end #current_hash statement
       puts "Enter an event name or number for dates, times, and description."
       puts "Or enter 'more' to see the next 20 events."
       input_1 = gets.strip
-      #PROBLEM:
       if input_1 == "more"
         @@counter += 1
         event_list(input)
@@ -78,9 +84,9 @@ class Aic::EventType #HAS MANY Events
       end #more input
   end #event_list
 #remember that@@all points to an array (v is an array)
-  def self.event_details(unique_hash, all_hash, input) #generates details for list or next 20 in list
+  def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
       sleep(0.5) #input is either event title or number
-      y = unique_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}[1]
+      y = unique_hash.detect {|k,v| v == "#{ip}" || k == "#{ip}".to_i}[1]
       if all_hash.detect {|k,v|  v.title == "#{y}"}
         found_events = [] #array of all events fitting input
           z = all_hash.select {|k,v|  v.title == "#{y}"}
@@ -97,7 +103,8 @@ class Aic::EventType #HAS MANY Events
           end #found_events
         elsif all_hash.none? {|k,v| v == "#{y}"}
           sleep(0.5)
-            puts "Sorry! I can't find that event."
+          puts "Sorry! I can't find that event."
+
       end #if statement
   end
 
