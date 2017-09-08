@@ -35,8 +35,8 @@ class Aic::Event # HAS ONE EventType
     end #case statment
   end #type_or_next
 
-
-  def self.event_menu #returns list of events to choose from
+######FIX THIS TO RETURN LIST OF UNIQUE EVENTS####
+  def self.event_menu #returns list of UNIQUE
     #needs to be refactored so that each event is only included once on the list if it is a repeat
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
