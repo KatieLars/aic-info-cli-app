@@ -40,43 +40,27 @@ class Aic::Event # HAS ONE EventType
     #needs to be refactored so that each event is only included once on the list if it is a repeat
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
-    unique_array = [] #elements are Events
-    unique_hash = {} #keys are numbers, values are Event objects
-    @@all.each do |e| #@@all is an array
-        if !unique_array.include? ("#{e.title}") #WORKS
-          unique_array << e.title
-        end #if !unique_array
-      unique_array.each do |event_title|
-        if event_title == e.title
-          unique_array.each.with_index {|el,i| unique_hash[i] = e}
-        end
-      end
-    end #@@all.each do
-
+    unique_hash = {}
+    unique_array = @@all.uniq {|e| e.title}
+    unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
     if unique_array.size >= 20
-      nested_arrays = unique_array.to_a.each_slice(20).to_a
-binding.pry
+      nested_arrays = unique_hash.to_a.each_slice(20).to_a
         if @@counter <= nested_arrays.size
-          nested_arrays[@@counter].each do |nest|
-            puts "#{nest[0]}. #{nest[1][0]} (#{nest[1][1]})"
-          end #nested_arrays
-        end #@@counter if
-      else
-      #PROBLEM HERE  unique_array.each {|k,v| puts "#{k}. #{v[0]} (#{v[1]})}"}
-    end
+          nested_arrays[@@counter].each  {|nest| puts "#{nest[0]}. #{nest[1].title} (#{nest[1].type.name})"}
+          end #@@counter if
+    else
+      unique_array.each.with_index(1) {|n, i| puts "#{i}. #{n.title} (#{n.type.name})"}
+    end #unique_array.size
     puts "Enter an event name or number for dates, times, and description."
     puts "Or enter 'more' to see the next 20 events."
     input = gets.strip
     if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
       sleep(0.5)
       self.event_info(current_hash, input)
-    elsif input == "more" #working #puts next twenty results and returns to the main menu
+    elsif input == "more" #working
       sleep(0.5)
       @@counter += 1
       event_menu
-    #elsif input == "type"
-      #puts out a numbered list of types applicable to events in the date range
-    #  Aic::EventType.all.each {|k,v| puts "#{k}"}
      elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
        sleep(0.5)
        puts "Sorry! I can't find that event."
