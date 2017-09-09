@@ -6,7 +6,7 @@ class Aic::EventType #HAS MANY Events
   def initialize(name)
     @events = []
     if name != ""
-      @name = name #add new key and value if one does not already exist
+      @name = name
     else
       @name = "Misc"
     end
@@ -44,16 +44,15 @@ class Aic::EventType #HAS MANY Events
     orig_in = input #lists events based on type
     sleep(0.5)
     current_hash = Hash.new
-    select_event_hash = Hash.new #an array of all Event objects corresponding to selected type
+    select_event_hash = Hash.new
     unique_hash = {}
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
     if current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
-        @@all.each do |k,v| #needs to match the detected type name or
+        @@all.each do |k,v|
           if k == current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}[1]
-          v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj} #making select_event_hash
-          unique_array = [] #v and select_event_hash are the same except v is an array, and the other is a hash
-          #binding.pry
-          v.each do |e| #v is an array of Event Objects
+          v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj}
+          unique_array = []
+          v.each do |e|
             if !unique_array.include?("#{e.title}")
               unique_array << e.title
             end #if unique_array.include?
@@ -83,12 +82,12 @@ class Aic::EventType #HAS MANY Events
       end
   end #event_list
 
-#remember that@@all points to an array (v is an array)
+
   def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
-      sleep(0.5) #input is either event title or number
+      sleep(0.5)
       y = unique_hash.detect {|k,v| v == "#{ip}" || k == "#{ip}".to_i}[1]
       if all_hash.detect {|k,v|  v.title == "#{y}"}
-        found_events = [] #array of all events fitting input
+        found_events = []
           z = all_hash.select {|k,v|  v.title == "#{y}"}
           z.each {|k,v| found_events << v}
           puts "#{found_events[0].title}"
@@ -107,6 +106,6 @@ class Aic::EventType #HAS MANY Events
           event_list(input)
       end #if statement
   end
-  #Control for type: events should always be Event objects
+
 
 end

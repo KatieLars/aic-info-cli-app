@@ -7,7 +7,7 @@ class Aic::Info
 
   def self.scrape_admission
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
-    price_array = doc.css("div.pricing-container") 
+    price_array = doc.css("div.pricing-container")
     price_array.each do |xml_element|
       @@adults["General"] = price_array.css("tr:nth-child(2) td.pricing-ga").text
       @@adults["Chicago"] = price_array.css("tr:nth-child(2) td.pricing-chires").text
@@ -46,7 +46,7 @@ class Aic::Info
     when "Free"
       free_info = []
       free_desc = []
-      free_hash ={} #key is header from free_info, value is description from free_desc
+      free_hash ={}
       doc.css("h2#FreeAdmissionOpportunities ~ h4").to_a.each do |e|
         free_info << e.text #keys
       end
@@ -65,8 +65,6 @@ class Aic::Info
       end
       puts "#{passport_head}"
       puts "#{passport_desc.join(".")}.)"
-
-      #scrapes code for free admission opportunities and re-organizes it
     end #case end
     repeat_or_exit
   end #prices
@@ -92,9 +90,4 @@ class Aic::Info
     end
   end
 
-  #scraper should also scrape for EventTypes and they should be added to EventType.all if they are new and
-  #scraper should scrape code from Exhibit page, Calendar page, Admission page, Description pages for individual Events and exhibits
-  #should generate: Exhibit object and Event object
-  #puts admissions information
-  #needs to interact with all objects
 end

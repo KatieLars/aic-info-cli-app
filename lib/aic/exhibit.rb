@@ -1,13 +1,12 @@
-class Aic::Exhibition #COMPLETE but needs type locking & refactoring
+class Aic::Exhibition
   attr_accessor :title, :date_range, :url, :description, :location
   @@current = []
   @@upcoming = []
 
   def self.scrape_from_web(url) #scrapes creates Exhibit objects from either upcoming or current website
-    
     doc = Nokogiri::HTML(open("#{url}"))
-    exhibit_array = doc.css("div.view.view-exhibitions div.views-row") #creates an array of nodes to iterate over and select info
-    exhibit_array.each do |xml_element| #try to refactor with send
+    exhibit_array = doc.css("div.view.view-exhibitions div.views-row")
+    exhibit_array.each do |xml_element|
       new_exhibit = Aic::Exhibition.new
       new_exhibit.title = xml_element.css("div.views-field.views-field-title span.field-content").text.tr("\n", "")
       new_exhibit.date_range = xml_element.css("strong.views-field.views-field-field-event-date div.field-content").text
@@ -23,7 +22,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
   end #scrape_from_web
 
   def self.exhibit_info(type) #generates exhibit info depending on user input
-    current_hash = {} #hash with index being key and exhibit title as value
+    current_hash = {}
     send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
     current_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Enter the name of the exhibition or its number for dates, times, and description"
@@ -42,7 +41,7 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
      elsif current_hash.none? {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
        sleep(0.5)
        puts "Sorry! I can't find that exhibition."
-       exhibit_info(type) #need to not accumulate lists . . .
+       exhibit_info(type)
      end #outer if statement
   end #exhibit_info
 
@@ -53,5 +52,5 @@ class Aic::Exhibition #COMPLETE but needs type locking & refactoring
   def self.upcoming
     @@upcoming
   end
-  #type lock @@current and @@future as Exhibit objects
+
 end
