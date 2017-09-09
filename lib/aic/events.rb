@@ -53,39 +53,71 @@ class Aic::Event # HAS ONE EventType
     end #unique_array.size
     puts "Enter an event name or number for dates, times, and description."
     puts "Or enter 'more' to see the next 20 events."
-    input = gets.strip
-    if current_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
+    input_1 = gets.strip
+
+    if (input_1.to_i.is_a?(Integer)) && (unique_hash.detect {|k,v| k == "#{input_1}".to_i})
+    #if unique_hash.detect {|k,v| v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
+    #binding.pry
       sleep(0.5)
-      self.event_info(current_hash, input)
-    elsif input == "more" #working
+      self.event_info(unique_hash, current_hash, input_1)
+    elsif !input_1.to_i.is_a?(Integer) && unique_hash.detect {|k,v| v.title.include?("#{input_1}")}
+      sleep(0.5)
+      self.event_info(unique_hash, current_hash, input_1)
+    elsif input_1 == "more" #working
       sleep(0.5)
       @@counter += 1
       event_menu
-     elsif current_hash.none? {|k,v| v.include?("#{input}") || k == "#{input}".to_i}
-       sleep(0.5)
+    elsif unique_hash.none? {|k,v| v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
+       sleep(0.5) #working
        puts "Sorry! I can't find that event."
        event_menu
      end #outer if statement
   end #event_menu
 
-  def self.event_info(event_hash, input)
-    occurs = []
-    @@all.each do |event|
-      if event.title.include? (event_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
-        occurs << event
-      end #if statement
-    end # all each end
-    occurs
-      puts "#{occurs[0].title}"
-      puts "#{occurs[0].type.name}"
-      puts "#{occurs[0].description}"
-      puts "When:"
-    occurs.each do |e|
-      puts "#{e.date.strftime("%m-%d-%Y")}"
-      puts "#{e.time}"
-      puts "#{e.url}"
-      puts ""
-    end #occurs each
+  def self.event_info(unique_hash, all_hash, ip)
+
+    sleep(0.5) #input is either event title or number
+    y = unique_hash.detect {|k,v| v == "#{ip}" || k == "#{ip}".to_i}[1].title
+
+    if all_hash.detect {|k,v|  v[0] == "#{y}"}
+
+      found_events = [] #array of all events fitting input
+        z = all_hash.select {|k,v|  v[1] == "#{y}"}
+binding.pry
+        z.each {|k,v| found_events << v}
+        puts "#{found_events[0].title}"
+        puts "#{found_events[0].type.name}"
+        puts "#{found_events[0].description}"
+        puts "When:"
+        found_events.each do |e|
+          puts "#{e.date.strftime("%m-%d-%Y")}"
+          puts "#{e.time}"
+          puts "#{e.url}"
+          puts ""
+        end #found_events
+      elsif all_hash.none? {|k,v| v == "#{y}"}
+        sleep(0.5)
+        puts "Sorry! I can't find that event."
+        event_menu
+    end #if statement
+    #occurs = []
+    #@@all.each do |event|
+    #  if event.title.include? (event_hash.detect {|k,v| v.include?("#{input}") || k == "#{input}".to_i}[1][0])
+    #    occurs << event
+    #  end #if statement
+    #  binding.pry
+    #end # all each end
+    #occurs
+    #  puts "#{occurs[0].title}"
+    #  puts "#{occurs[0].type.name}"
+    #  puts "#{occurs[0].description}"
+    #  puts "When:"
+    #occurs.each do |e|
+    #  puts "#{e.date.strftime("%m-%d-%Y")}"
+    #  puts "#{e.time}"
+    #  puts "#{e.url}"
+    #  puts ""
+    #end #occurs each
   end #event_info
 
 
