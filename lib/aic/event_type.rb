@@ -10,16 +10,18 @@ class Aic::EventType #HAS MANY Events
     else
       @name = "Misc"
     end
-    add_events
   end
 
   def add_events #adds Event object to @event array, and returns updated list
+    #y = Aic::Event.all
+
     Aic::Event.all.each do |event_object|
       if event_object.type.name == @name
         @events << event_object
       end
         @@all[@name] = @events
     end
+
   end
 
   def self.all
@@ -29,6 +31,7 @@ class Aic::EventType #HAS MANY Events
   def self.select_type # generates a list of types for specified date range
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
+
     type_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Select the number of the event type or enter the type name to see a list of all relevant events"
     input = gets.strip
@@ -73,8 +76,9 @@ class Aic::EventType #HAS MANY Events
       puts "Or enter 'more' to see the next 20 events."
       input_1 = gets.strip
       if input_1 == "more"
-        event_list(orig_in)
         @@counter += 1
+        event_list(orig_in)
+
       elsif select_event_hash.none? {|k,v| v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
         puts "Sorry! I can't find that event."
         sleep(1.0)
@@ -87,7 +91,7 @@ class Aic::EventType #HAS MANY Events
 
   def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
       sleep(0.5)
-      binding.pry
+
       y = unique_hash.detect {|k,v| (v.include? "#{ip}") || (k == "#{ip}".to_i)}[1]
       if all_hash.detect {|k,v|  v.title == "#{y}"}
         found_events = []
