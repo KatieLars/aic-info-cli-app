@@ -1,8 +1,10 @@
 # Aic::Info::Cli::App
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/aic/info/cli/app`. To experiment with that code, run `bin/console` for an interactive prompt.
+Welcome to Art Institute of Chicago Info App!
 
-TODO: Delete this and the text above, and describe your gem
+This app is designed to help you see what events and exhibitions are happening at the Art Institute of Chicago. By following the prompts, you can see both current and upcoming exhibitions, events happening today or even a year in the future, and admission fees and general information.
+
+The Art Institute of Chicago is one of the world's premiere art museums with collections spanning 6 continents and over 25 centuries. It also hosts artists, galas, family programs, and guided tours.
 
 ## Installation
 
@@ -22,7 +24,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+For those who love art or the city of Chicago and want to stay in the know, follow the prompts to discover all the events and exhibitions coming up at the Art Institute of Chicago, including children's programming, lectures, performance art, rare screenings, and blockbuster exhibitions. 
 
 ## Development
 
@@ -38,4 +40,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/'katma
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
