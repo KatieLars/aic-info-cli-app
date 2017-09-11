@@ -78,25 +78,4 @@ class Aic::Info
     end
   end #prices
 
-  def self.repeat_or_exit
-    puts ""
-    puts "To see more admission fees, please select another residency (Chicago, Illinois, General, Free) option."
-    puts "Or type 'exit' to exit."
-    input = gets.strip
-    case input
-    when "exit"
-      exit
-    when "General"
-      prices("General")
-    when "Illinois"
-      prices("Illinois")
-    when "Chicago"
-      prices("Chicago")
-    when "Free"
-      prices("Free")
-    else
-      repeat_or_exit
-    end
-  end
-
 end
