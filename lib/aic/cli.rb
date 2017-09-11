@@ -82,7 +82,7 @@ class Aic::CLI
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.type_or_next
     end #case statement end
-    if Chronic.parse("#{input}").is_a?(Time) && !input == "today" && !input == "Today"#works
+    if Chronic.parse("#{input}").is_a?(Time) #&& !input == "today" && !input == "Today"#works
       date1 = Chronic.parse("#{input}")
       puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
       puts "Or type 'next' to see a list of events"

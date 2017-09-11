@@ -27,31 +27,31 @@ class Aic::Info
 
   def self.prices(residency)
     doc = Nokogiri::HTML(open("http://www.artic.edu/visit"))
-    case residency
-    when "General"
+    free_hash = {}
+    if residency == "General" || residency == "1"
       puts "Adults: #{@@adults["General"]}"
       puts "Seniors (65+): #{@@seniors["General"]}"
       puts "Students: #{@@students["General"]}"
       puts "Teens (ages 14-17): #{@@teens["General"]}"
-    when "Illinois"
+    elsif residency == "Illinois" || residency == "2"
       puts "Adults: #{@@adults["Illinois"]}"
       puts "Seniors (65+): #{@@seniors["Illinois"]}"
       puts "Students: #{@@students["Illinois"]}"
       puts "Teens (ages 14-17): #{@@teens["Illinois"]}"
-    when "Chicago"
+    elsif residency == "Chicago" || residency == "3"
       puts "Adults: #{@@adults["Chicago"]}"
       puts "Seniors (65+): #{@@seniors["Chicago"]}"
       puts "Students: #{@@students["Chicago"]}"
       puts "Teens (ages 14-17): #{@@teens["Chicago"]}"
-    when "Free"
+    elsif residency == "Free" || residency == "4"
       free_info = []
       free_desc = []
       free_hash ={}
       doc.css("h2#FreeAdmissionOpportunities ~ h4").to_a.each do |e|
-        free_info << e.text #keys
-      end
+        free_info << e.text #keys that are headlines
+      end #h4.each
       doc.css("h2#FreeAdmissionOpportunities ~ p").to_a.each do |e|
-        free_desc << e.text #values
+      free_desc << e.text #values
       end
       passport_desc = free_desc.slice!(-1).split(".")
       passport_desc.slice!(-1)
@@ -62,11 +62,20 @@ class Aic::Info
         puts "#{k}"
         puts "#{v}"
         puts ""
-      end
+      end #free_hash
       puts "#{passport_head}"
       puts "#{passport_desc.join(".")}.)"
-    end #case end
-    repeat_or_exit
+  end #if statement
+
+    puts ""
+    puts "To see more admission fees, please select another residency (Chicago, Illinois, General, Free) option."
+    puts "Or type 'exit' to exit."
+    input = gets.strip
+    if input == "exit"
+      exit
+    else
+    prices(input)
+    end
   end #prices
 
   def self.repeat_or_exit
@@ -78,13 +87,13 @@ class Aic::Info
     when "exit"
       exit
     when "General"
-      prices(input)
+      prices("General")
     when "Illinois"
-      prices(input)
+      prices("Illinois")
     when "Chicago"
-      prices(input)
+      prices("Chicago")
     when "Free"
-      prices(input)
+      prices("Free")
     else
       repeat_or_exit
     end

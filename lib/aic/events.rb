@@ -75,8 +75,8 @@ class Aic::Event # HAS ONE EventType
 
   def self.event_info(unique_hash, all_hash, ip)
     sleep(0.5)
-    y = unique_hash.detect {|k,v| v.title.include? "#{ip}" || k == "#{ip}".to_i}[1].title
-      if all_hash.detect {|k,v|  v[0] == "#{y}"}
+    y = unique_hash.detect {|k,v| (v.title.include? ("#{ip}")) || (k == "#{ip}".to_i)}[1].title
+      if all_hash.select {|k,v|  v[0] == "#{y}"}
         z = @@all.select {|e| e.title == "#{y}"}
         puts "#{z[0].title}"
         puts "#{z[0].type.name}"
