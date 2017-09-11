@@ -7,20 +7,20 @@ class Aic::Event # HAS ONE EventType
   def self.scrape_from_web(url) #creates Event objects from URL
     doc = Nokogiri::HTML(open("#{url}"))
     event_array = doc.css("div.calendar_result div.views-row")
-    new_event = Aic::Event.new
-    event_array.each do |xml_element|
 
+    event_array.each do |xml_element|
+      new_event = Aic::Event.new
       new_event.title = xml_element.css("div.col-wrapper.clearfix div.col-inner div.title.views-field.views-field-title").text.strip
-      new_event.type = Aic::EventType.new(xml_element.css("div.col-wrapper.clearfix div.col-inner div.views-field.views-field-taxonomy").text.strip)
+      new_event.type = Aic::EventType.new(xml_element.css("div.col-wrapper.clearfix div.col-inner div.views-field.views-field-taxonomy").text)
       new_event.date = Chronic.parse(xml_element.css("div.col-wrapper.clearfix div.col-inner div.date.views-field").text.strip)
       new_event.description = xml_element.css("div.col-wrapper.clearfix div.col-inner div.summary.views-field p").text.strip
       new_event.url = "http://www.artic.edu" + xml_element.css("div.col-wrapper.clearfix div.col-inner div.title.views-field.views-field-title a").attribute("href").text.strip
       new_event.time = xml_element.css("div.col-wrapper.clearfix div.col-inner div.time.views-field").text.strip
       @@all << new_event
+      new_event.type.add_events
     end
-    binding.pry
-    @@all
-    new_event.type.add_events
+
+
   end #scraper
 
   def self.all
@@ -29,13 +29,14 @@ class Aic::Event # HAS ONE EventType
 
   def self.type_or_next #determines if user stays in Events or goes to EventTypes
     first_input = gets.strip
+
     case first_input
     when "type"
       Aic::EventType.select_type
     when "next"
       event_menu
     end #case statment
-    binding.pry
+
   end #type_or_next
 
   def self.event_menu

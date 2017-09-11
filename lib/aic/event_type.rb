@@ -35,7 +35,7 @@ class Aic::EventType #HAS MANY Events
     type_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Select the number of the event type or enter the type name to see a list of all relevant events"
     input = gets.strip
-    if type_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
+    if type_hash.detect {|k,v| (v.include? ("#{input}")) || (k == "#{input}".to_i)}
       event_list(input)
     else
       puts"Sorry! I couldn't find that type of event."
@@ -50,9 +50,9 @@ class Aic::EventType #HAS MANY Events
     select_event_hash = Hash.new
     unique_hash = {}
     @@all.to_a.each.with_index(1) {|e,i| current_hash[i] = "#{e[0]}"}
-    if current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}
+    if current_hash.detect {|k,v| (v.include? ("#{input}")) || (k == "#{input}".to_i)}
         @@all.each do |k,v|
-          if k == current_hash.detect {|k,v| v == "#{input}" || k == "#{input}".to_i}[1]
+          if k == current_hash.detect {|k,v| (v.include? ("#{input}")) || (k == "#{input}".to_i)}[1]
           v.each.with_index(1) {|e_obj, i| select_event_hash[i] = e_obj}
           unique_array = []
           v.each do |e|
