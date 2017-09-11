@@ -61,6 +61,7 @@ class Aic::EventType #HAS MANY Events
               unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
               nested_arrays = unique_hash.to_a.each_slice(20).to_a #nested array where each element is an array of 20 elements
               nested_arrays[@@counter].each {|small_e| puts "#{small_e[0]}. #{small_e[1]}"}
+
             else
             unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
             unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
@@ -73,6 +74,7 @@ class Aic::EventType #HAS MANY Events
       input_1 = gets.strip
       if input_1 == "more"
         event_list(orig_in)
+        @@counter += 1
       elsif select_event_hash.none? {|k,v| v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
         puts "Sorry! I can't find that event."
         sleep(1.0)
@@ -85,7 +87,8 @@ class Aic::EventType #HAS MANY Events
 
   def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
       sleep(0.5)
-      y = unique_hash.detect {|k,v| v == "#{ip}" || k == "#{ip}".to_i}[1]
+      binding.pry
+      y = unique_hash.detect {|k,v| (v.include? "#{ip}") || (k == "#{ip}".to_i)}[1]
       if all_hash.detect {|k,v|  v.title == "#{y}"}
         found_events = []
           z = all_hash.select {|k,v|  v.title == "#{y}"}
