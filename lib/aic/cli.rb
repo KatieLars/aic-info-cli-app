@@ -18,6 +18,8 @@ class Aic::CLI
     else
       call
     end #case statement end
+    puts ""
+    call
   end #call end
 
 
@@ -44,7 +46,7 @@ class Aic::CLI
 
   def events #needs refactoring
     sleep(0.5)
-    puts "To see a list of the first twenty events in the next month, type 'all'"
+    puts "To see events in the next month, type 'all'"
     puts "Enter a date(MM/DD/YYYY) or type 'range' to enter a date range and see select events"
     puts "You may also enter 'today' to see today's events."
     input = gets.strip
@@ -81,14 +83,16 @@ class Aic::CLI
       puts "Or type 'next' to see a list of events"
       Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date2.strftime("%m-%d-%Y")}")
       Aic::Event.type_or_next
+    else
+      if Chronic.parse("#{input}").is_a?(Time) #&& !input == "today" && !input == "Today"#works
+        date1 = Chronic.parse("#{input}")
+        puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
+        puts "Or type 'next' to see a list of events"
+        Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
+        Aic::Event.type_or_next
+      end
     end #case statement end
-    if Chronic.parse("#{input}").is_a?(Time) #&& !input == "today" && !input == "Today"#works
-      date1 = Chronic.parse("#{input}")
-      puts "Enter 'type' to select events based on type (Talks, Screenings, etc.)"
-      puts "Or type 'next' to see a list of events"
-      Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
-      Aic::Event.type_or_next
-    end
+  
   end #events end
 
   def info

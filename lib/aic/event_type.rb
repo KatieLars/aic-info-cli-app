@@ -100,11 +100,11 @@ class Aic::EventType #HAS MANY Events
           puts "#{found_events[0].title}"
           puts "#{found_events[0].type.name}"
           puts "#{found_events[0].description}"
+          puts "#{found_events[0].url}"
           puts "When:"
           found_events.each do |e|
             puts "#{e.date.strftime("%m-%d-%Y")}"
             puts "#{e.time}"
-            puts "#{e.url}"
             puts ""
           end #found_events
         elsif all_hash.none? {|k,v| v == "#{y}"}

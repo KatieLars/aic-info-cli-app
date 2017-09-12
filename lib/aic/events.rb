@@ -56,10 +56,11 @@ class Aic::Event # HAS ONE EventType
     puts "Enter an event name or number for dates, times, and description."
     puts "Or enter 'more' to see the next 20 events."
     input_1 = gets.strip
-    if (input_1.to_i != 0) && (unique_hash.detect {|k,v| k == "#{input_1}".to_i})
+    if ("#{input_1}".to_i != 0) && (unique_hash.detect {|k,v| k == "#{input_1}".to_i})
       sleep(0.5)
+
       self.event_info(unique_hash, current_hash, input_1)
-    elsif (input_1.to_i == 0) && (unique_hash.detect {|k,v| v.title.include?("#{input_1}")})
+    elsif ("#{input_1}".to_i == 0) && (unique_hash.detect {|k,v| v.title.include?("#{input_1}")})
       sleep(0.5)
       self.event_info(unique_hash, current_hash, input_1)
     elsif input_1 == "more" #working
@@ -75,17 +76,18 @@ class Aic::Event # HAS ONE EventType
 
   def self.event_info(unique_hash, all_hash, ip)
     sleep(0.5)
-    y = unique_hash.detect {|k,v| (v.title.include? ("#{ip}")) || (k == "#{ip}".to_i)}[1].title
+
+    y = unique_hash.detect {|k,v| (ip.to_i == 0 && (v.title.include? ("#{ip}"))) || (k == "#{ip}".to_i)}[1].title
       if all_hash.select {|k,v|  v[0] == "#{y}"}
         z = @@all.select {|e| e.title == "#{y}"}
         puts "#{z[0].title}"
         puts "#{z[0].type.name}"
         puts "#{z[0].description}"
+        puts "#{z[0].url}"
         puts "When:"
         z.each do |e|
           puts "#{e.date.strftime("%m-%d-%Y")}"
           puts "#{e.time}"
-          puts "#{e.url}"
           puts ""
         end
       elsif all_hash.none? {|k,v| v == "#{y}"}
