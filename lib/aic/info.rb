@@ -22,7 +22,6 @@ class Aic::Info
       @@teens["Chicago"] = price_array.css("tr:nth-child(5) td.pricing-chires").text
       @@teens["Illinois"] = price_array.css("tr:nth-child(5) td.pricing-illres").text
     end
-
   end #scrape_admission end
 
   def self.prices(residency)
@@ -66,12 +65,10 @@ class Aic::Info
       puts "#{passport_head}"
       puts "#{passport_desc.join(".")}.)"
   end #if statement
-
     puts ""
     puts "To see more admission fees, please select another residency (Chicago, Illinois, General, Free) option."
     puts "To return to the main menu, type 'menu.'"
     puts "Or type 'exit' to exit."
-
     input = gets.strip
     if input == "menu"
         new_cli = Aic::CLI.new

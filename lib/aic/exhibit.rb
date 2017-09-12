@@ -23,13 +23,19 @@ class Aic::Exhibition
 
   def self.exhibit_info(type) #generates exhibit info depending on user input
     current_hash = {}
+    unique_hash = {}
     send("#{type}").each.with_index(1) {|e, i| current_hash[i] =  "#{e.title}"}
-    current_hash.each {|k,v| puts "#{k}. #{v}"}
+    x = current_hash.to_a.uniq {|e| e[1]}
+    x.each do |pair|
+      puts "#{pair[0]}. #{pair[1]}"
+      unique_hash[pair[0]] = "#{pair[1]}"
+    end
     puts "Enter the name of the exhibition or its number for dates, times, and description"
     new_input = gets.strip
-    if current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
+    if unique_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
+      send("#{type}").uniq! {|e| e.title}
       send("#{type}").each do |exhibit|
-        if exhibit.title.include? (current_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}[1])
+        if exhibit.title.include? (unique_hash.detect {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}[1])
           sleep(1.0)
           puts "#{exhibit.title}"
           puts "#{exhibit.date_range}"
@@ -38,7 +44,7 @@ class Aic::Exhibition
           puts "#{exhibit.url}"
         end #inner if statement must stay
       end #each end
-     elsif current_hash.none? {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
+    elsif unique_hash.none? {|k,v| v.include?("#{new_input}") || k == "#{new_input}".to_i}
        sleep(0.5)
        puts "Sorry! I can't find that exhibition."
        exhibit_info(type)

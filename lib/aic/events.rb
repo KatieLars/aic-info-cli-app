@@ -24,7 +24,6 @@ class Aic::Event # HAS ONE EventType
     if @@all.none? {|evie| evie == new_event}
       @@all << new_event
     end
-
   end
 
   def self.all
@@ -33,14 +32,12 @@ class Aic::Event # HAS ONE EventType
 
   def self.type_or_next #determines if user stays in Events or goes to EventTypes
     first_input = gets.strip
-
     case first_input
     when "type"
       Aic::EventType.select_type
     when "next"
       event_menu
     end #case statment
-
   end #type_or_next
 
   def self.event_menu
@@ -102,10 +99,5 @@ class Aic::Event # HAS ONE EventType
      end #all_hash.select
     @@counter = 0
   end #event_info
-  #if obj_date.none? {|d| d == e.date}
-  #  obj_date << e.date
-  #end #obj_date end
-  #if obj_time.none? {|t| t == e.time}
-  #  obj_time << e.time
-  #end #obj_time end
+  
 end

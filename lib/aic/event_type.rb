@@ -13,15 +13,12 @@ class Aic::EventType #HAS MANY Events
   end
 
   def add_events #adds Event object to @event array, and returns updated list
-    #y = Aic::Event.all
-
     Aic::Event.all.each do |event_object|
       if event_object.type.name == @name
         @events << event_object
       end
         @@all[@name] = @events
     end
-
   end
 
   def self.all
@@ -31,7 +28,6 @@ class Aic::EventType #HAS MANY Events
   def self.select_type # generates a list of types for specified date range
     type_hash = Hash.new
     @@all.to_a.each.with_index(1) {|e,i| type_hash[i] = "#{e[0]}"}
-
     type_hash.each {|k,v| puts "#{k}. #{v}"}
     puts "Select the number of the event type or enter the type name to see a list of all relevant events"
     input = gets.strip
@@ -64,7 +60,6 @@ class Aic::EventType #HAS MANY Events
               unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
               nested_arrays = unique_hash.to_a.each_slice(20).to_a #nested array where each element is an array of 20 elements
               nested_arrays[@@counter].each {|small_e| puts "#{small_e[0]}. #{small_e[1]}"}
-
             else
             unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
             unique_array.each.with_index(1) {|eventini, i| puts "#{i}. #{eventini}"}
@@ -78,7 +73,6 @@ class Aic::EventType #HAS MANY Events
       if input_1 == "more"
         @@counter += 1
         event_list(orig_in)
-
       elsif select_event_hash.none? {|k,v| v.title.include?("#{input_1}") || k == "#{input_1}".to_i}
         puts "Sorry! I can't find that event."
         sleep(1.0)
@@ -115,6 +109,5 @@ class Aic::EventType #HAS MANY Events
       end #if statement
       @@counter = 0
   end
-
 
 end
