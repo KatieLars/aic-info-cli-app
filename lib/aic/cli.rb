@@ -19,8 +19,20 @@ class Aic::CLI
       call
     end #case statement end
     puts ""
-    call
+    repeat_or_exit
   end #call end
+
+  def repeat_or_exit
+    puts "To return to the main menu, type 'menu', otherwise type 'exit' to exit the program."
+    ip = gets.strip
+    case ip
+    when "menu"
+      call
+    when "exit"
+      exit
+    end
+  end
+
 
 
   def menu #COMPLETE
@@ -92,7 +104,7 @@ class Aic::CLI
         Aic::Event.type_or_next
       end
     end #case statement end
-  
+
   end #events end
 
   def info

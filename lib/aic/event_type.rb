@@ -107,6 +107,7 @@ class Aic::EventType #HAS MANY Events
             puts "#{e.time}"
             puts ""
           end #found_events
+          @@counter = 0
         elsif all_hash.none? {|k,v| v == "#{y}"}
           sleep(0.5)
           puts "Sorry! I can't find that event."

@@ -76,7 +76,6 @@ class Aic::Event # HAS ONE EventType
 
   def self.event_info(unique_hash, all_hash, ip)
     sleep(0.5)
-
     y = unique_hash.detect {|k,v| (ip.to_i == 0 && (v.title.include? ("#{ip}"))) || (k == "#{ip}".to_i)}[1].title
       if all_hash.select {|k,v|  v[0] == "#{y}"}
         z = @@all.select {|e| e.title == "#{y}"}
@@ -90,6 +89,7 @@ class Aic::Event # HAS ONE EventType
           puts "#{e.time}"
           puts ""
         end
+        @@counter = 0
       elsif all_hash.none? {|k,v| v == "#{y}"}
         sleep(0.5)
         puts "Sorry! I can't find that event."
