@@ -91,9 +91,9 @@ class Aic::EventType #HAS MANY Events
 
   def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
       sleep(0.5)
-
       y = unique_hash.detect {|k,v| (v.include? "#{ip}") || (k == "#{ip}".to_i)}[1]
       if all_hash.detect {|k,v|  v.title == "#{y}"}
+        obj_date_time = []
         found_events = []
           z = all_hash.select {|k,v|  v.title == "#{y}"}
           z.each {|k,v| found_events << v}
@@ -102,17 +102,18 @@ class Aic::EventType #HAS MANY Events
           puts "#{found_events[0].description}"
           puts "#{found_events[0].url}"
           puts "When:"
-          found_events.each do |e|
-            puts "#{e.date.strftime("%m-%d-%Y")}"
-            puts "#{e.time}"
+          found_events.each {|e| obj_date_time << [e.date, e.time]}
+          obj_date_time.uniq.each do |nested_dt|
+            puts "#{nested_dt[0].strftime("%m-%d-%Y")}"
+            puts "#{nested_dt[1]}"
             puts ""
-          end #found_events
-          @@counter = 0
+          end
         elsif all_hash.none? {|k,v| v == "#{y}"}
           sleep(0.5)
           puts "Sorry! I can't find that event."
           event_list(input)
       end #if statement
+      @@counter = 0
   end
 
 

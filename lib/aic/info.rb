@@ -69,9 +69,14 @@ class Aic::Info
 
     puts ""
     puts "To see more admission fees, please select another residency (Chicago, Illinois, General, Free) option."
+    puts "To return to the main menu, type 'menu.'"
     puts "Or type 'exit' to exit."
+
     input = gets.strip
-    if input == "exit"
+    if input == "menu"
+        new_cli = Aic::CLI.new
+        new_cli.call
+    elsif input == "exit"
       exit
     else
     prices(input)

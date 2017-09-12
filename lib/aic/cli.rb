@@ -15,6 +15,8 @@ class Aic::CLI
       events
     when "info"
       info
+    when "exit"
+      exit
     else
       call
     end #case statement end
@@ -32,8 +34,6 @@ class Aic::CLI
       exit
     end
   end
-
-
 
   def menu #COMPLETE
     puts "Come see what's at the Art Institute!"
