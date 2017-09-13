@@ -45,7 +45,6 @@ class Aic::Event # HAS ONE EventType
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     unique_hash = {}
     unique_array = @@all.uniq {|e| e.title}
-    binding.pry
     unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
     if unique_array.size >= 20
       nested_arrays = unique_hash.to_a.each_slice(20).to_a

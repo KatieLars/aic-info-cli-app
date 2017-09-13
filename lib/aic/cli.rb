@@ -29,6 +29,8 @@ class Aic::CLI
     ip = gets.strip
     case ip
     when "menu"
+      Aic::Event.all.clear
+      Aic::Info.new
       call
     when "exit"
       exit
@@ -48,7 +50,8 @@ class Aic::CLI
     puts "For upcoming exhibitions, enter 'upcoming'"
     input = gets.strip
     if input == "current" || input == "upcoming"
-
+      Aic::Exhibition.current.clear
+      Aic::Exhibition.upcoming.clear
       Aic::Exhibition.scrape_from_web("http://www.artic.edu/exhibitions/#{input}")
       Aic::Exhibition.exhibit_info("#{input}")
     else

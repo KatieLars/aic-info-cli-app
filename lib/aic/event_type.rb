@@ -85,7 +85,11 @@ class Aic::EventType #HAS MANY Events
 
   def self.event_details(unique_hash, all_hash, ip) #generates details for list or next 20 in list
       sleep(0.5)
-      y = unique_hash.detect {|k,v| (v.include? "#{ip}") || (k == "#{ip}".to_i)}[1]
+      if "#{ip}".to_i != 0 #ip is not a string (v.include? "#{ip}")
+        y = unique_hash.detect {|k,v| k == "#{ip}".to_i}[1]
+      else #ip is a string
+        y = unique_hash.detect {|k,v| v.include? "#{ip}"}[1]
+      end
       if all_hash.detect {|k,v|  v.title == "#{y}"}
         obj_date_time = []
         found_events = []
@@ -109,5 +113,6 @@ class Aic::EventType #HAS MANY Events
       end #if statement
       @@counter = 0
   end
+
 
 end
