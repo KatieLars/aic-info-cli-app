@@ -40,11 +40,12 @@ class Aic::Event # HAS ONE EventType
     end #case statment
   end #type_or_next
 
-  def self.event_menu
+  def self.event_menu #problem: events are accumulating again
     current_hash = Hash.new(v=[])
     @@all.each.with_index(1) {|e, i| current_hash[i] =  ["#{e.title}", "#{e.type.name}"]}
     unique_hash = {}
     unique_array = @@all.uniq {|e| e.title}
+    binding.pry
     unique_array.each.with_index(1) {|e,i| unique_hash[i] = e}
     if unique_array.size >= 20
       nested_arrays = unique_hash.to_a.each_slice(20).to_a
@@ -72,6 +73,7 @@ class Aic::Event # HAS ONE EventType
        puts "Sorry! I can't find that event."
        event_menu
      end #outer if statement
+     @@counter == 0
   end #event_menu
 
   def self.event_info(unique_hash, all_hash, ip)
@@ -99,5 +101,5 @@ class Aic::Event # HAS ONE EventType
      end #all_hash.select
     @@counter = 0
   end #event_info
-  
+
 end

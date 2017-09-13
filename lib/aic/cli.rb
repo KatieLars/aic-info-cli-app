@@ -103,6 +103,7 @@ class Aic::CLI
         Aic::Event.scrape_from_web("http://www.artic.edu/calendar?date1=#{date1.strftime("%m-%d-%Y")}&date2=#{date1.strftime("%m-%d-%Y")}")
         Aic::Event.type_or_next
       end
+
     end #case statement end
 
   end #events end
