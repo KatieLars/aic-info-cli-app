@@ -53,11 +53,45 @@ class Aic::CLI
       Aic::Exhibition.current.clear
       Aic::Exhibition.upcoming.clear
       Aic::Exhibition.scrape_from_web("http://www.artic.edu/exhibitions/#{input}")
-      Aic::Exhibition.exhibit_info("#{input}")
+      exhibit_info("#{input}")
     else
       exhibitions
     end
   end #exhibits end
+
+  def exhibit_info(type)
+    if type == "current"
+      collection = Aic::Exhibition.current
+    else
+      collection = Aic::Exhibition.upcoming
+    end
+
+    collection.each.with_index(1) do |current_exhib, i|
+      puts "#{i}. #{current_exhib.title}"
+    end
+
+    exhibitions_menu(collection)
+  end
+
+  def exhibitions_menu(collection) #collection is array of Objects
+    puts "Enter the number of the exhibition for its dates, times, and description"
+    input = gets.strip
+    if input.to_i.between?(1, collection.size)
+      exhibit = collection[input.to_i-1]
+      display_exhibit(exhibit)
+    else
+      puts "Sorry! I can't find that exhibition."
+      exhibitions_menu(collection)
+    end
+  end
+
+  def display_exhibit(exhibit) #passes in Obj arg and displays info
+    puts "#{exhibit.title}"
+    puts "#{exhibit.date_range}"
+    puts "#{exhibit.location}"
+    puts "#{exhibit.description}"
+    puts "#{exhibit.url}"
+  end
 
   def events #needs refactoring
     sleep(0.5)
